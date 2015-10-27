@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package ru.koluch.textWork.mParser;
+package ru.koluch.textWork.dictionaryParser;
 
 /**
  * Record in lexemes table

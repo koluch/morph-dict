@@ -1,8 +1,5 @@
-package ru.koluch.textWork.mParser;
+package ru.koluch.textWork.dictionaryParser;
 
-
-import ru.koluch.textWork.mParser.morphParser.*;
-import ru.koluch.textWork.mParser.morphParser.Ancode;
 
 import java.io.*;
 import java.util.*;
@@ -11,20 +8,20 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static ru.koluch.textWork.mParser.morphParser.Ancode.ANCODE;
-import static ru.koluch.textWork.mParser.morphParser.Ending.ENDING;
+import static ru.koluch.textWork.dictionaryParser.Ancode.ANCODE;
+import static ru.koluch.textWork.dictionaryParser.Ending.ENDING;
 
 
 /**
  *
  * "Nikolay Mavrenkov <koluch@koluch.ru>"
  */
-public class MorphParser {
+public class DictionaryParser {
     
     private ArrayList<ParadigmRule> allRules = new ArrayList<>();
     private HashMap<String, LexemeRec[]> baseToLexemes = new HashMap<>();
 
-    public MorphParser(InputStream inputStream) {
+    public DictionaryParser(InputStream inputStream) {
         /**
          * Dictionary loading
          */
@@ -122,12 +119,12 @@ public class MorphParser {
 
 
         } catch (IOException ex) {
-            Logger.getLogger(MorphParser.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DictionaryParser.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 fin.close();
             } catch (IOException ex) {
-                Logger.getLogger(MorphParser.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(DictionaryParser.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }

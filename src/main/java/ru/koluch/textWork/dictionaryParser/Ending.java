@@ -1,6 +1,4 @@
-package ru.koluch.textWork.mParser.morphParser;
-
-import org.apache.log4j.Logger;
+package ru.koluch.textWork.dictionaryParser;
 
 /**
  * @author Nikolay Mavrenkov <koluch@koluch.ru>

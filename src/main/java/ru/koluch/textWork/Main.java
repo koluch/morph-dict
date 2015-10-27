@@ -4,7 +4,9 @@ import java.io.*;
 import java.util.ArrayList;
 
 import org.apache.commons.io.IOUtils;
-import ru.koluch.textWork.mParser.*;
+import ru.koluch.textWork.dictionaryParser.DictionaryParser;
+import ru.koluch.textWork.dictionaryParser.Lexeme;
+import ru.koluch.textWork.dictionaryParser.MorphParams;
 
 public class Main {
 
@@ -21,10 +23,10 @@ public class Main {
         }
 */
 
-        MorphParser morphParser = initParser();
+        DictionaryParser dictionaryParser = initParser();
         MorphParams params = initParams();
 
-        testOnData(morphParser,params);
+        testOnData(dictionaryParser,params);
 
         System.out.println("Finished!");
 
@@ -36,10 +38,10 @@ public class Main {
 
     }
 
-    private static MorphParser initParser() {
-        MorphParser morphParser = new MorphParser(Main.class.getResourceAsStream("/morphs.mrd"));
+    private static DictionaryParser initParser() {
+        DictionaryParser dictionaryParser = new DictionaryParser(Main.class.getResourceAsStream("/morphs.mrd"));
         MorphParams params = new MorphParams(Main.class.getResourceAsStream("/rgramtab.tab"));
-        return morphParser;
+        return dictionaryParser;
     }
 
     private static MorphParams initParams() {
@@ -47,12 +49,12 @@ public class Main {
         return params;
     }
 
-    private static void testOnData(MorphParser morphParser, MorphParams params) throws IOException {
+    private static void testOnData(DictionaryParser dictionaryParser, MorphParams params) throws IOException {
         InputStream testText = Main.class.getResourceAsStream("/test.txt");
         BufferedReader inputStreamReader = new BufferedReader(new InputStreamReader(testText));
 
         {
-            ArrayList<Lexeme> lex_list = morphParser.find("КРАСИВЕЕ");
+            ArrayList<Lexeme> lex_list = dictionaryParser.find("КРАСИВЕЕ");
             Lexeme first = lex_list.get(0);
 
             System.out.println(first.getBase().getBase() + first.getBase().getFlexion());
@@ -73,7 +75,7 @@ public class Main {
         System.out.println("Total word count: " + words.length);
         for (String word : words) {
 		/* Get main wordform by arbitrary */
-            ArrayList<Lexeme> lex_list = morphParser.find(word.toUpperCase());
+            ArrayList<Lexeme> lex_list = dictionaryParser.find(word.toUpperCase());
             if(lex_list.size()<1)
             {
 //                System.out.println("WARN: " + word);

@@ -1,4 +1,4 @@
-package ru.koluch.textWork.mParser.morphParser;
+package ru.koluch.textWork.dictionaryParser;
 
 import org.apache.log4j.Logger;
 
