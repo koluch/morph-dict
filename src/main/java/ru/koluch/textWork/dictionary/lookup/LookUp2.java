@@ -26,12 +26,12 @@ import ru.koluch.textWork.dictionary.Dictionary;
 
 import java.util.*;
 
-public class Lookup {
+public class LookUp2 {
 
 
     private final Dictionary dictionary;
 
-    public Lookup(ru.koluch.textWork.dictionary.Dictionary dictionary) {
+    public LookUp2(ru.koluch.textWork.dictionary.Dictionary dictionary) {
         this.dictionary = dictionary;
     }
 
