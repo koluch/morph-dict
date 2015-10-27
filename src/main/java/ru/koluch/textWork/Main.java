@@ -4,6 +4,7 @@ import java.io.*;
 import java.util.ArrayList;
 
 import org.apache.commons.io.IOUtils;
+import ru.koluch.textWork.dictionaryParser.Dictionary;
 import ru.koluch.textWork.dictionaryParser.DictionaryParser;
 import ru.koluch.textWork.dictionaryParser.Lexeme;
 import ru.koluch.textWork.dictionaryParser.MorphParams;
@@ -13,43 +14,21 @@ public class Main {
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, DictionaryParser.ParseException {
 
-/*
-        try {
-            Thread.sleep(20000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-*/
+        DictionaryParser dictionaryParser = new DictionaryParser();
+        MorphParams params = new MorphParams(Main.class.getResourceAsStream("/rgramtab.tab"));
 
-        DictionaryParser dictionaryParser = initParser();
-        MorphParams params = initParams();
+        Dictionary dictionary = dictionaryParser.parse(Main.class.getResourceAsStream("/morphs.mrd"));
 
-        testOnData(dictionaryParser,params);
+        testOnData(dictionary, params);
 
         System.out.println("Finished!");
 
-/*        try {
-            Thread.sleep(130000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }*/
 
     }
 
-    private static DictionaryParser initParser() {
-        DictionaryParser dictionaryParser = new DictionaryParser(Main.class.getResourceAsStream("/morphs.mrd"));
-        MorphParams params = new MorphParams(Main.class.getResourceAsStream("/rgramtab.tab"));
-        return dictionaryParser;
-    }
-
-    private static MorphParams initParams() {
-        MorphParams params = new MorphParams(Main.class.getResourceAsStream("/rgramtab.tab"));
-        return params;
-    }
-
-    private static void testOnData(DictionaryParser dictionaryParser, MorphParams params) throws IOException {
+    private static void testOnData(Dictionary dictionaryParser, MorphParams params) throws IOException {
         InputStream testText = Main.class.getResourceAsStream("/test.txt");
         BufferedReader inputStreamReader = new BufferedReader(new InputStreamReader(testText));
 
