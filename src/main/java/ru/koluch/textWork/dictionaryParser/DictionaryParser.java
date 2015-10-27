@@ -8,7 +8,6 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static ru.koluch.textWork.dictionaryParser.Ancode.ANCODE;
 import static ru.koluch.textWork.dictionaryParser.Ending.ENDING;
 
 
@@ -47,7 +46,7 @@ public class DictionaryParser {
                     if(paradigmMatcher.find())
                     {
                         Ending ending = ENDING(paradigmMatcher.group(1));
-                        Ancode ancode = ANCODE(paradigmMatcher.group(2));
+                        String ancode = paradigmMatcher.group(2);
                         String prefix = paradigmMatcher.group(4);
                         if(prefix!=null)
                         {
@@ -180,7 +179,7 @@ public class DictionaryParser {
                         Lexeme lex = new Lexeme();
                         
                         // Get basic ancodes and endings, create main wordform
-                        buf1 = paradigmRule.getFirstAncode().value;
+                        buf1 = paradigmRule.getFirstAncode();
                         buf2 = paradigmRule.getFirstEnding().value;
                         form = new WordForm();
                         form.setAncode(buf1);
@@ -199,13 +198,13 @@ public class DictionaryParser {
                         }
                         
                         // Get list of ancods for current ending
-                        List<Ancode> ancodes = paradigmRule.getEndingsToAncodes().get(ENDING(flex));
+                        List<String> ancodes = paradigmRule.getEndingsToAncodes().get(ENDING(flex));
 
-                        for (Ancode nextAncode : ancodes) {
+                        for (String nextAncode : ancodes) {
                             // For each ancode create wordform and register in lexeme as homonym
                             form = new WordForm();
 
-                            form.setAncode(nextAncode.value);
+                            form.setAncode(nextAncode);
                             form.setBase(base);
                             form.setFlexion(flex);
 

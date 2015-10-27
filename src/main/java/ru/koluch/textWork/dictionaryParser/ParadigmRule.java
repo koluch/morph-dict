@@ -13,10 +13,10 @@ import java.util.*;
 public class ParadigmRule {
     private static final Logger log = Logger.getLogger(ParadigmRule.class);
 
-    private final Map<Ending,List<Ancode>> endingsToAncodes = new HashMap<>();
+    private final Map<Ending,List<String>> endingsToAncodes = new HashMap<>();
 
     private Ending firstEnding;
-    private Ancode firstAncode;
+    private String firstAncode;
 
     public Ending getFirstEnding() {
         return firstEnding;
@@ -26,26 +26,26 @@ public class ParadigmRule {
         this.firstEnding = firstEnding;
     }
 
-    public Ancode getFirstAncode() {
+    public String getFirstAncode() {
         return firstAncode;
     }
 
-    public void setFirstAncode(Ancode firstAncode) {
+    public void setFirstAncode(String firstAncode) {
         this.firstAncode = firstAncode;
     }
 
-    public ParadigmRule addAncode(Ending ending, Ancode ancode)
+    public ParadigmRule addAncode(Ending ending, String ancode)
     {
         if(!endingsToAncodes.containsKey(ending))
         {
-            endingsToAncodes.put(ending, new ArrayList<Ancode>());
+            endingsToAncodes.put(ending, new ArrayList<>());
         }
-        List<Ancode> ancodeList = endingsToAncodes.get(ending);
+        List<String> ancodeList = endingsToAncodes.get(ending);
         ancodeList.add(ancode);
         return this;
     }
 
-    public Map<Ending, List<Ancode>> getEndingsToAncodes() {
+    public Map<Ending, List<String>> getEndingsToAncodes() {
         return endingsToAncodes;
     }
 }
