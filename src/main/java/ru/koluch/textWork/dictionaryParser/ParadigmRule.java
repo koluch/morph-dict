@@ -13,16 +13,16 @@ import java.util.*;
 public class ParadigmRule {
     private static final Logger log = Logger.getLogger(ParadigmRule.class);
 
-    private final Map<Ending,List<String>> endingsToAncodes = new HashMap<>();
+    private final Map<String,List<String>> endingsToAncodes = new HashMap<>();
 
-    private Ending firstEnding;
+    private String firstEnding;
     private String firstAncode;
 
-    public Ending getFirstEnding() {
+    public String getFirstEnding() {
         return firstEnding;
     }
 
-    public void setFirstEnding(Ending firstEnding) {
+    public void setFirstEnding(String firstEnding) {
         this.firstEnding = firstEnding;
     }
 
@@ -34,7 +34,7 @@ public class ParadigmRule {
         this.firstAncode = firstAncode;
     }
 
-    public ParadigmRule addAncode(Ending ending, String ancode)
+    public ParadigmRule addAncode(String ending, String ancode)
     {
         if(!endingsToAncodes.containsKey(ending))
         {
@@ -45,7 +45,7 @@ public class ParadigmRule {
         return this;
     }
 
-    public Map<Ending, List<String>> getEndingsToAncodes() {
+    public Map<String, List<String>> getEndingsToAncodes() {
         return endingsToAncodes;
     }
 }

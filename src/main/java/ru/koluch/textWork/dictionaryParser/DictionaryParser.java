@@ -8,8 +8,6 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static ru.koluch.textWork.dictionaryParser.Ending.ENDING;
-
 
 /**
  *
@@ -45,8 +43,8 @@ public class DictionaryParser {
                     Matcher paradigmMatcher = paradigmEx.matcher(paradigmString);
                     if(paradigmMatcher.find())
                     {
-                        Ending ending = ENDING(paradigmMatcher.group(1));
-                        String ancode = paradigmMatcher.group(2);
+                        String ending = paradigmMatcher.group(1);
+                        String ancode = paradigmMatcher.group(2);  // Ancode is Anoshkin's code
                         String prefix = paradigmMatcher.group(4);
                         if(prefix!=null)
                         {
@@ -173,14 +171,14 @@ public class DictionaryParser {
                     ParadigmRule paradigmRule = allRules.get(ending_list[n].mod);
 
                     // If model contains current ending
-                    if(paradigmRule.getEndingsToAncodes().containsKey(ENDING(flex)))
+                    if(paradigmRule.getEndingsToAncodes().containsKey(flex))
                     {
                         // Create lexeme
                         Lexeme lex = new Lexeme();
                         
                         // Get basic ancodes and endings, create main wordform
                         buf1 = paradigmRule.getFirstAncode();
-                        buf2 = paradigmRule.getFirstEnding().value;
+                        buf2 = paradigmRule.getFirstEnding();
                         form = new WordForm();
                         form.setAncode(buf1);
                         form.setBase(base);
@@ -198,7 +196,7 @@ public class DictionaryParser {
                         }
                         
                         // Get list of ancods for current ending
-                        List<String> ancodes = paradigmRule.getEndingsToAncodes().get(ENDING(flex));
+                        List<String> ancodes = paradigmRule.getEndingsToAncodes().get(flex);
 
                         for (String nextAncode : ancodes) {
                             // For each ancode create wordform and register in lexeme as homonym
