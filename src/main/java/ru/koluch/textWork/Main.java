@@ -7,7 +7,7 @@ import ru.koluch.textWork.dictionary.Dictionary;
 import ru.koluch.textWork.dictionary.DictionaryParser;
 import ru.koluch.textWork.dictionary.lookup.Lexeme;
 import ru.koluch.textWork.dictionary.MorphParams;
-import ru.koluch.textWork.dictionary.lookup.LookUp2;
+import ru.koluch.textWork.dictionary.lookup.Lookup;
 
 public class Main {
 
@@ -20,7 +20,7 @@ public class Main {
         MorphParams params = new MorphParams(Main.class.getResourceAsStream("/rgramtab.tab"));
 
         Dictionary dictionary = dictionaryParser.parse(Main.class.getResourceAsStream("/morphs.mrd"));
-        LookUp2 lookup = new LookUp2(dictionary);
+        Lookup lookup = new Lookup(dictionary);
 
         testOnData(lookup, params);
 
@@ -29,7 +29,7 @@ public class Main {
 
     }
 
-    private static void testOnData(LookUp2 lookup, MorphParams params) throws IOException {
+    private static void testOnData(Lookup lookup, MorphParams params) throws IOException {
         InputStream testText = Main.class.getResourceAsStream("/test.txt");
         BufferedReader inputStreamReader = new BufferedReader(new InputStreamReader(testText));
 
