@@ -1,11 +1,8 @@
-package ru.koluch.textWork.dictionaryParser;
+package ru.koluch.textWork.dictionary;
 
 
 import java.io.*;
-import java.text.ParseException;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

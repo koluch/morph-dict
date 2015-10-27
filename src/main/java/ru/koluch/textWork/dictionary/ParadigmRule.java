@@ -1,4 +1,4 @@
-package ru.koluch.textWork.dictionaryParser;
+package ru.koluch.textWork.dictionary;
 
 import org.apache.log4j.Logger;
 

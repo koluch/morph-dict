@@ -18,7 +18,7 @@
  * Author:  Nikolay Mavrenkov <koluch@koluch.ru>
  * Created: 27.10.2015 23:07
  */
-package ru.koluch.textWork.dictionaryParser;
+package ru.koluch.textWork.dictionary;
 
 import java.util.*;
 

@@ -4,10 +4,10 @@ import java.io.*;
 import java.util.ArrayList;
 
 import org.apache.commons.io.IOUtils;
-import ru.koluch.textWork.dictionaryParser.Dictionary;
-import ru.koluch.textWork.dictionaryParser.DictionaryParser;
-import ru.koluch.textWork.dictionaryParser.Lexeme;
-import ru.koluch.textWork.dictionaryParser.MorphParams;
+import ru.koluch.textWork.dictionary.Dictionary;
+import ru.koluch.textWork.dictionary.DictionaryParser;
+import ru.koluch.textWork.dictionary.Lexeme;
+import ru.koluch.textWork.dictionary.MorphParams;
 
 public class Main {
 

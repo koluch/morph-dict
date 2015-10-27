@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package ru.koluch.textWork.dictionaryParser;
+package ru.koluch.textWork.dictionary;
 
 /**
  *
@@ -29,7 +29,7 @@ public enum LexemeType {
 
     private int id;
 
-    private LexemeType(int id) {
+    LexemeType(int id) {
         this.id = id;
     }
 

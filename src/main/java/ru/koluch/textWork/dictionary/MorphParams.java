@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package ru.koluch.textWork.dictionaryParser;
+package ru.koluch.textWork.dictionary;
 
 import java.io.*;
 import java.util.HashMap;
@@ -252,7 +252,7 @@ public class MorphParams {
         return ancode_chars[1];
     }
 
-    public static enum Plurality {SINGULAR, PLURAL, UNDEF}
+    public enum Plurality {SINGULAR, PLURAL, UNDEF}
     public Plurality getNumber(String ancode)
     {
         char[] ancode_chars = ancode_list.get(ancode);
