@@ -1,6 +1,9 @@
 package ru.koluch.textWork.dictionary;
 
 
+import ru.koluch.textWork.dictionary.*;
+import ru.koluch.textWork.dictionary.lookup.LexemeRec;
+
 import java.io.*;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -17,11 +20,11 @@ public class DictionaryParser {
     public DictionaryParser() {
     }
 
-    public Dictionary parse(InputStream inputStream) throws ParseException {
+    public ru.koluch.textWork.dictionary.Dictionary parse(InputStream inputStream) throws ParseException {
 
 
         ArrayList<ParadigmRule> allRules = new ArrayList<>();
-        HashMap<String, LexemeRec[]> baseToLexemes = new HashMap<>();
+        HashMap<String, List<LexemeRec>> baseToLexemes = new HashMap<>();
 
         /**
          * Dictionary loading
@@ -92,30 +95,22 @@ public class DictionaryParser {
                 String anc = lemParts[4];
                 // String prefix = matcher.group(5);
 
-                LexemeRec[] modelList;
+                List<LexemeRec> modelList;
                 if (baseToLexemes.containsKey(basis)) {
                     modelList = baseToLexemes.get(basis);
                 } else {
-                    modelList = new LexemeRec[10];
-                    for (int n = 0; n < 10; ++n) {
-                        modelList[n] = new LexemeRec();
-                        modelList[n].mod = -1;
-                    }
+                    modelList = new ArrayList<>();
                     baseToLexemes.put(basis, modelList);
                 }
 
+                LexemeRec lexemRec = new LexemeRec();
+                lexemRec.mod = paradigmNum;
+                lexemRec.ancode = anc;
+                modelList.add(lexemRec);
 
-                for (int n = 0; n < 10; ++n) {
-                    if (modelList[n].mod == -1) {
-                        modelList[n].mod = paradigmNum;
-                        if(!modelList.equals(" -"))
-                            modelList[n].ancode = anc;
-                        break;
-                    }
-                }
             }
 
-            return new Dictionary(allRules, baseToLexemes);
+            return new ru.koluch.textWork.dictionary.Dictionary(allRules, baseToLexemes);
 
         } catch (IOException ex) {
             throw new ParseException(ex);

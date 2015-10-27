@@ -3,7 +3,9 @@
  * and open the template in the editor.
  */
 
-package ru.koluch.textWork.dictionary;
+package ru.koluch.textWork.dictionary.lookup;
+
+import ru.koluch.textWork.dictionary.WordForm;
 
 import java.util.ArrayList;
 import java.util.Iterator;
