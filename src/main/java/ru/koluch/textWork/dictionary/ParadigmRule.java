@@ -13,39 +13,9 @@ import java.util.*;
 public class ParadigmRule {
     private static final Logger log = Logger.getLogger(ParadigmRule.class);
 
-    private final Map<String,List<String>> endingsToAncodes = new HashMap<>();
+    public final List<ParadigmRuleRecord> paradigmRuleRecords = new ArrayList<>();
 
-    private String firstEnding;
-    private String firstAncode;
-
-    public String getFirstEnding() {
-        return firstEnding;
-    }
-
-    public void setFirstEnding(String firstEnding) {
-        this.firstEnding = firstEnding;
-    }
-
-    public String getFirstAncode() {
-        return firstAncode;
-    }
-
-    public void setFirstAncode(String firstAncode) {
-        this.firstAncode = firstAncode;
-    }
-
-    public ParadigmRule addAncode(String ending, String ancode)
-    {
-        if(!endingsToAncodes.containsKey(ending))
-        {
-            endingsToAncodes.put(ending, new ArrayList<>());
-        }
-        List<String> ancodeList = endingsToAncodes.get(ending);
-        ancodeList.add(ancode);
-        return this;
-    }
-
-    public Map<String, List<String>> getEndingsToAncodes() {
-        return endingsToAncodes;
+    public ParadigmRule(List<ParadigmRuleRecord> paradigmRuleRecords) {
+        this.paradigmRuleRecords.addAll(paradigmRuleRecords);
     }
 }

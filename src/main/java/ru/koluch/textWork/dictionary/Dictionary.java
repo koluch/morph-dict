@@ -35,19 +35,16 @@ public class Dictionary {
     }
 
     public void allForms() {
-        int counter = 0;
         for (Map.Entry<String, List<LexemeRec>> entry : baseToLexemes.entrySet()) {
             String base = entry.getKey();
             for (LexemeRec lexemeRec : entry.getValue()) {
                 ParadigmRule paradigmRule = allRules.get(lexemeRec.mod);
-                for (Map.Entry<String,List<String>> endingToAncodes : paradigmRule.getEndingsToAncodes().entrySet()) {
-                    String ending = endingToAncodes.getKey();
-                    System.out.println(base + ending);
-                    counter++;
+
+                for (ParadigmRuleRecord ruleRecord : paradigmRule.paradigmRuleRecords) {
+                    System.out.println(ruleRecord.prefix + base + ruleRecord.ending);
                 }
             }
         }
-        System.out.println(counter);
     }
 
 }

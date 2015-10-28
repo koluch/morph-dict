@@ -32,15 +32,16 @@ public class DictionaryParser {
         try(BufferedReader fin = new BufferedReader(new InputStreamReader(inputStream))) {
 
 
-            // Load endings models
+            // Load flexias models
             int num = Integer.valueOf(fin.readLine());
             Pattern paradigmListEx = Pattern.compile("\\%([^\\%]+)");
             Pattern paradigmEx = Pattern.compile("([^\\*]*)\\*([^\\*]*)(:?\\*([^\\*]*))?");
             for (int i = 0; i < num; ++i) {
                 String nextString = fin.readLine();
                 Matcher matcher = paradigmListEx.matcher(nextString);
-                ParadigmRule paradigmRule = new ParadigmRule();
                 int k = 0;
+
+                ArrayList<ParadigmRuleRecord> paradigmRuleRecords = new ArrayList<>();
                 while(matcher.find())
                 {
                     String paradigmString = matcher.group(1);
@@ -50,18 +51,25 @@ public class DictionaryParser {
                         String ending = paradigmMatcher.group(1);
                         String ancode = paradigmMatcher.group(2);  // Ancode is Anoshkin's code
                         String prefix = paradigmMatcher.group(4);
-                        if(prefix!=null)
-                        {
-//                            System.out.println("!");
-                        }
-                        paradigmRule.addAncode(ending, ancode);
-                        if(k++==0)
-                        {
-                            paradigmRule.setFirstAncode(ancode);
-                            paradigmRule.setFirstEnding(ending);
-                        }
+
+                        paradigmRuleRecords.add(new ParadigmRuleRecord(ending, ancode, prefix));
+
+//                        if(prefix!=null)
+//                        {
+////                            System.out.println("!");
+//                        }
+//                        paradigmRule.addAncode(ending, ancode);
+//                        if(k++==0)
+//                        {
+//                            paradigmRule.setFirstAncode(ancode);
+//                            paradigmRule.setFirstEnding(ending);
+//                        }
                     }
                 }
+
+                ParadigmRule paradigmRule = new ParadigmRule(paradigmRuleRecords);
+
+
                 allRules.add(paradigmRule);
             }
 

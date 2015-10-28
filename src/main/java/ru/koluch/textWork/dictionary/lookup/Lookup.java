@@ -25,6 +25,7 @@ import ru.koluch.textWork.dictionary.*;
 import ru.koluch.textWork.dictionary.Dictionary;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Lookup {
 
@@ -46,7 +47,6 @@ public class Lookup {
         HashMap flex_mod;
         HashSet flex_params;
         WordForm form;
-        String base, flex, ancode, buf1, buf2;
         Iterator it;
 
         tofind = tofind.toUpperCase(); // Make it uppercase
@@ -57,8 +57,9 @@ public class Lookup {
         // Iterate all sub-string of source word from beggining to the i-th symbol
         for(int i=1, len=tofind.length(); i<=len; ++i)
         {
-            base = tofind.substring(0, i);
-            flex = tofind.substring(i);
+            String buf1, buf2;
+            final String base = tofind.substring(0, i);
+            final String flex = tofind.substring(i);
 
             // If current state is not registered yet
             if(dictionary.baseToLexemes.containsKey(base))
@@ -75,15 +76,19 @@ public class Lookup {
 //                    }
                     ParadigmRule paradigmRule = dictionary.allRules.get(lexemeRec.mod);
 
+                    List<ParadigmRuleRecord> flexMatchinRecords = paradigmRule.paradigmRuleRecords.stream().filter((x) -> x.ending.equals(flex)).collect(Collectors.toList());
+
                     // If model contains current ending
-                    if(paradigmRule.getEndingsToAncodes().containsKey(flex))
+                    if(!flexMatchinRecords.isEmpty())
                     {
                         // Create lexeme
                         Lexeme lex = new Lexeme();
 
+                        ParadigmRuleRecord firstEnding = paradigmRule.paradigmRuleRecords.get(0);
+
                         // Get basic ancodes and endings, create main wordform
-                        buf1 = paradigmRule.getFirstAncode();
-                        buf2 = paradigmRule.getFirstEnding();
+                        buf1 = firstEnding.ancode;
+                        buf2 = firstEnding.ending;
                         form = new WordForm();
                         form.setAncode(buf1);
                         form.setBase(base);
@@ -100,16 +105,13 @@ public class Lookup {
                             lex.setCommonAn(" -");
                         }
 
-                        // Get list of ancods for current ending
-                        List<String> ancodes = paradigmRule.getEndingsToAncodes().get(flex);
-
-                        for (String nextAncode : ancodes) {
+                        for (ParadigmRuleRecord flexMatchinRecord : flexMatchinRecords) {
                             // For each ancode create wordform and register in lexeme as homonym
                             form = new WordForm();
 
-                            form.setAncode(nextAncode);
+                            form.setAncode(flexMatchinRecord.ancode);
                             form.setBase(base);
-                            form.setFlexion(flex);
+                            form.setFlexion(flexMatchinRecord.ending);
 
                             lex.AddOmonim(form);
                         }
