@@ -22,6 +22,8 @@ public class Main {
         Dictionary dictionary = dictionaryParser.parse(Main.class.getResourceAsStream("/morphs.mrd"));
         Lookup lookup = new Lookup(dictionary);
 
+        dictionary.allForms();
+
         testOnData(lookup, params);
 
         System.out.println("Finished!");
@@ -32,6 +34,7 @@ public class Main {
     private static void testOnData(Lookup lookup, MorphParams params) throws IOException {
         InputStream testText = Main.class.getResourceAsStream("/test.txt");
         BufferedReader inputStreamReader = new BufferedReader(new InputStreamReader(testText));
+
 
         {
             ArrayList<Lexeme> lex_list = lookup.find("КРАСИВЕЕ");
