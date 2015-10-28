@@ -1,9 +1,5 @@
 package ru.koluch.textWork.dictionary;
 
-import org.apache.log4j.Logger;
-
-import java.util.*;
-
 /**
  * @author Nikolay Mavrenkov <koluch@koluch.ru>
  *         Date: 9/5/13
@@ -11,11 +7,17 @@ import java.util.*;
  */
 
 public class ParadigmRule {
-    private static final Logger log = Logger.getLogger(ParadigmRule.class);
 
-    public final List<ParadigmRuleRecord> paradigmRuleRecords = new ArrayList<>();
+    public final String ending;
+    public final String ancode;
+    public final String prefix;
 
-    public ParadigmRule(List<ParadigmRuleRecord> paradigmRuleRecords) {
-        this.paradigmRuleRecords.addAll(paradigmRuleRecords);
+
+    public ParadigmRule(String ending, String ancode, String prefix) {
+        this.ending = ending != null ? ending : "";
+        this.ancode = ancode;
+        this.prefix = prefix != null ? prefix : "";
     }
+
+
 }

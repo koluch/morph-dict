@@ -1,7 +1,6 @@
 package ru.koluch.textWork.dictionary;
 
 
-import ru.koluch.textWork.dictionary.*;
 import ru.koluch.textWork.dictionary.lookup.LexemeRec;
 
 import java.io.*;
@@ -23,7 +22,7 @@ public class DictionaryParser {
     public ru.koluch.textWork.dictionary.Dictionary parse(InputStream inputStream) throws ParseException {
 
 
-        ArrayList<ParadigmRule> allRules = new ArrayList<>();
+        List<List<ParadigmRule>> allRules = new ArrayList<>();
         HashMap<String, List<LexemeRec>> baseToLexemes = new HashMap<>();
 
         /**
@@ -41,7 +40,7 @@ public class DictionaryParser {
                 Matcher matcher = paradigmListEx.matcher(nextString);
                 int k = 0;
 
-                ArrayList<ParadigmRuleRecord> paradigmRuleRecords = new ArrayList<>();
+                List<ParadigmRule> paradigmRules = new ArrayList<>();
                 while(matcher.find())
                 {
                     String paradigmString = matcher.group(1);
@@ -52,25 +51,11 @@ public class DictionaryParser {
                         String ancode = paradigmMatcher.group(2);  // Ancode is Anoshkin's code
                         String prefix = paradigmMatcher.group(4);
 
-                        paradigmRuleRecords.add(new ParadigmRuleRecord(ending, ancode, prefix));
-
-//                        if(prefix!=null)
-//                        {
-////                            System.out.println("!");
-//                        }
-//                        paradigmRule.addAncode(ending, ancode);
-//                        if(k++==0)
-//                        {
-//                            paradigmRule.setFirstAncode(ancode);
-//                            paradigmRule.setFirstEnding(ending);
-//                        }
+                        paradigmRules.add(new ParadigmRule(ending, ancode, prefix));
                     }
                 }
 
-                ParadigmRule paradigmRule = new ParadigmRule(paradigmRuleRecords);
-
-
-                allRules.add(paradigmRule);
+                allRules.add(paradigmRules);
             }
 
             // Skip: accents, journal, prefixes... //todo:implement

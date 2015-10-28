@@ -20,16 +20,15 @@
  */
 package ru.koluch.textWork.dictionary;
 
-import ru.koluch.textWork.dictionary.lookup.Lexeme;
 import ru.koluch.textWork.dictionary.lookup.LexemeRec;
 
 import java.util.*;
 
 public class Dictionary {
-    public ArrayList<ParadigmRule> allRules = new ArrayList<>();
+    public List<List<ParadigmRule>> allRules = new ArrayList<>();
     public HashMap<String, List<LexemeRec>> baseToLexemes = new HashMap<>();
 
-    public Dictionary(ArrayList<ParadigmRule> allRules, HashMap<String,  List<LexemeRec>> baseToLexemes) {
+    public Dictionary(List<List<ParadigmRule>> allRules, HashMap<String,  List<LexemeRec>> baseToLexemes) {
         this.allRules = allRules;
         this.baseToLexemes = baseToLexemes;
     }
@@ -38,10 +37,10 @@ public class Dictionary {
         for (Map.Entry<String, List<LexemeRec>> entry : baseToLexemes.entrySet()) {
             String base = entry.getKey();
             for (LexemeRec lexemeRec : entry.getValue()) {
-                ParadigmRule paradigmRule = allRules.get(lexemeRec.mod);
+                List<ParadigmRule> paradigmRule = allRules.get(lexemeRec.mod);
 
-                for (ParadigmRuleRecord ruleRecord : paradigmRule.paradigmRuleRecords) {
-                    System.out.println(ruleRecord.prefix + base + ruleRecord.ending);
+                for (ParadigmRule ruleRecord : paradigmRule) {
+//                    System.out.println(ruleRecord.prefix + base + ruleRecord.ending);
                 }
             }
         }

@@ -69,14 +69,10 @@ public class Lookup {
                 ending_list = dictionary.baseToLexemes.get(base);
 
                 for (LexemeRec lexemeRec : ending_list) {
-//                    // If model with this number it not registered yet - break
-//                    if(lexemeRec.mod==-1)
-//                    {
-//                        break;
-//                    }
-                    ParadigmRule paradigmRule = dictionary.allRules.get(lexemeRec.mod);
 
-                    List<ParadigmRuleRecord> flexMatchinRecords = paradigmRule.paradigmRuleRecords.stream().filter((x) -> x.ending.equals(flex)).collect(Collectors.toList());
+                    List<ParadigmRule> paradigmRule = dictionary.allRules.get(lexemeRec.mod);
+
+                    List<ParadigmRule> flexMatchinRecords = paradigmRule.stream().filter((x) -> x.ending.equals(flex)).collect(Collectors.toList());
 
                     // If model contains current ending
                     if(!flexMatchinRecords.isEmpty())
@@ -84,7 +80,7 @@ public class Lookup {
                         // Create lexeme
                         Lexeme lex = new Lexeme();
 
-                        ParadigmRuleRecord firstEnding = paradigmRule.paradigmRuleRecords.get(0);
+                        ParadigmRule firstEnding = paradigmRule.get(0);
 
                         // Get basic ancodes and endings, create main wordform
                         buf1 = firstEnding.ancode;
@@ -105,7 +101,7 @@ public class Lookup {
                             lex.setCommonAn(" -");
                         }
 
-                        for (ParadigmRuleRecord flexMatchinRecord : flexMatchinRecords) {
+                        for (ParadigmRule flexMatchinRecord : flexMatchinRecords) {
                             // For each ancode create wordform and register in lexeme as homonym
                             form = new WordForm();
 
