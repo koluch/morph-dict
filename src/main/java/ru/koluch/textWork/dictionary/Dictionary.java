@@ -33,17 +33,18 @@ public class Dictionary {
         this.baseToLexemes = baseToLexemes;
     }
 
-    public void allForms() {
+    public List<String> allForms() {
+        ArrayList<String> result = new ArrayList<>(10000000);
         for (Map.Entry<String, List<LexemeRec>> entry : baseToLexemes.entrySet()) {
             String base = entry.getKey();
             for (LexemeRec lexemeRec : entry.getValue()) {
                 List<ParadigmRule> paradigmRule = allRules.get(lexemeRec.mod);
-
                 for (ParadigmRule ruleRecord : paradigmRule) {
-//                    System.out.println(ruleRecord.prefix + base + ruleRecord.ending);
+                    result.add(ruleRecord.prefix + base + ruleRecord.ending);
                 }
             }
         }
+        return result;
     }
 
 }

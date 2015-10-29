@@ -2,6 +2,7 @@ package ru.koluch.textWork;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
 
 import ru.koluch.textWork.dictionary.Dictionary;
 import ru.koluch.textWork.dictionary.DictionaryParser;
@@ -22,7 +23,7 @@ public class Main {
         Dictionary dictionary = dictionaryParser.parse(new InputStreamReader(Main.class.getResourceAsStream("/morphs.mrd"), "UTF-8"));
         Lookup lookup = new Lookup(dictionary);
 
-//        dictionary.allForms();
+        List<String> allForms = dictionary.allForms();
 
         testOnData(lookup, params);
 
