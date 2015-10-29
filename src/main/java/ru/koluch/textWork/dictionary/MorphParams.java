@@ -19,7 +19,7 @@ public class MorphParams {
 
     private HashMap<String,char[]> ancode_list; // Существительные
 
-    public MorphParams(InputStream inputStream) {
+    public MorphParams(Reader reader) {
         /**
          *
          * Load list of ancodes with parameters
@@ -27,7 +27,7 @@ public class MorphParams {
          */
         try
         {
-            BufferedReader fin = new BufferedReader(new InputStreamReader(inputStream));
+            BufferedReader fin = new BufferedReader(reader);
             ancode_list = new HashMap<>();
             char[] newan;
             String str, ancode;

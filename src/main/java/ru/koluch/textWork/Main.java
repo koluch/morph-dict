@@ -17,12 +17,12 @@ public class Main {
 	public static void main(String[] args) throws IOException, DictionaryParser.ParseException {
 
         DictionaryParser dictionaryParser = new DictionaryParser();
-        MorphParams params = new MorphParams(Main.class.getResourceAsStream("/rgramtab.tab"));
+        MorphParams params = new MorphParams(new InputStreamReader(Main.class.getResourceAsStream("/rgramtab.tab"), "UTF-8"));
 
-        Dictionary dictionary = dictionaryParser.parse(Main.class.getResourceAsStream("/morphs.mrd"));
+        Dictionary dictionary = dictionaryParser.parse(new InputStreamReader(Main.class.getResourceAsStream("/morphs.mrd"), "UTF-8"));
         Lookup lookup = new Lookup(dictionary);
 
-        dictionary.allForms();
+//        dictionary.allForms();
 
         testOnData(lookup, params);
 
@@ -33,8 +33,6 @@ public class Main {
 
     private static void testOnData(Lookup lookup, MorphParams params) throws IOException {
         InputStream testText = Main.class.getResourceAsStream("/test.txt");
-        BufferedReader inputStreamReader = new BufferedReader(new InputStreamReader(testText));
-
 
         {
             ArrayList<Lexeme> lex_list = lookup.find("КРАСИВЕЕ");

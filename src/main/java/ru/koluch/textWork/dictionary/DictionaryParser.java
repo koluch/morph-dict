@@ -19,7 +19,7 @@ public class DictionaryParser {
     public DictionaryParser() {
     }
 
-    public ru.koluch.textWork.dictionary.Dictionary parse(InputStream inputStream) throws ParseException {
+    public ru.koluch.textWork.dictionary.Dictionary parse(Reader reader) throws ParseException {
 
 
         List<List<ParadigmRule>> allRules = new ArrayList<>();
@@ -28,7 +28,7 @@ public class DictionaryParser {
         /**
          * Dictionary loading
          */
-        try(BufferedReader fin = new BufferedReader(new InputStreamReader(inputStream))) {
+        try(BufferedReader fin = new BufferedReader(reader)) {
 
 
             // Load flexias models
