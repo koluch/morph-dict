@@ -25,17 +25,15 @@ public class MorphParams {
          * Load list of ancodes with parameters
          *
          */
-        try
+        try(BufferedReader fin = new BufferedReader(reader))
         {
-            BufferedReader fin = new BufferedReader(reader);
             ancode_list = new HashMap<>();
             char[] newan;
             String str, ancode;
             String type_str,params,param;
             int a,b;
-            while(fin.ready())
+            while((str = fin.readLine()) != null)
             {
-                str = fin.readLine();
                 if(str.equals("")) continue;
                 ancode = str.substring(0, 2);
                 if(ancode.equals("//")) continue;
