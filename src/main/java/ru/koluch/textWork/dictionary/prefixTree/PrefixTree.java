@@ -40,17 +40,20 @@ public class PrefixTree<T> {
         }
         else {
             char nextBranch = wordForm.charAt(0);
-
             int index;
-            if(nextBranch=='ё') {
-                index = 32;
-            }
-            else {
-                if(nextBranch<'а' || nextBranch>'я') {
-                    throw new IllegalArgumentException("Bad branch: '" + nextBranch + "' (allowed only russian letters)");
-                }
+            if(nextBranch >= 'а' && nextBranch <= 'е') {
                 index = nextBranch - 'а';
             }
+            else if (nextBranch=='ё') {
+                index = 'е' - 'а' + 1;
+            }
+            else if (nextBranch > 'е' && nextBranch <= 'я') {
+                index = nextBranch - 'а' + 1;
+            }
+            else {
+                throw new IllegalArgumentException("Bad branch: '" + nextBranch + "' (allowed only russian letters)");
+            }
+
             String rest = wordForm.substring(1);
             if(this.branches==null) {
                 this.branches = new PrefixTree[33];  // 33 letters in russian alphabet
