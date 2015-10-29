@@ -9,6 +9,8 @@ import ru.koluch.textWork.dictionary.DictionaryParser;
 import ru.koluch.textWork.dictionary.lookup.Lexeme;
 import ru.koluch.textWork.dictionary.MorphParams;
 import ru.koluch.textWork.dictionary.lookup.Lookup;
+import ru.koluch.textWork.dictionary.prefixTree.PrefixTree;
+import ru.koluch.textWork.dictionary.prefixTree.TreeBuilder;
 
 public class Main {
 
@@ -23,7 +25,9 @@ public class Main {
         Dictionary dictionary = dictionaryParser.parse(new InputStreamReader(Main.class.getResourceAsStream("/morphs.mrd"), "UTF-8"));
         Lookup lookup = new Lookup(dictionary);
 
-        List<String> allForms = dictionary.allForms();
+
+        TreeBuilder treeBuilder = new TreeBuilder();
+        PrefixTree<Object> build = treeBuilder.build(dictionary);
 
         testOnData(lookup, params);
 
