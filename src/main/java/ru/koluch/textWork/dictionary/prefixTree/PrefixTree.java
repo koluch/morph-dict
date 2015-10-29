@@ -34,4 +34,37 @@ public class PrefixTree<T> {
     public PrefixTree() {
     }
 
+    public void add(String wordForm, T data) {
+        if(wordForm.length()==0) {
+            this.data = data;
+        }
+        else {
+            char nextBranch = wordForm.charAt(0);
+
+            int index;
+            if(nextBranch=='ё') {
+                index = 32;
+            }
+            else {
+                if(nextBranch<'а' || nextBranch>'я') {
+                    throw new IllegalArgumentException("Bad branch: '" + nextBranch + "' (allowed only russian letters)");
+                }
+                index = nextBranch - 'а';
+            }
+            String rest = wordForm.substring(1);
+            if(this.branches==null) {
+                this.branches = new PrefixTree[33];  // 33 letters in russian alphabet
+            }
+
+            PrefixTree<T> nextTree;
+            if(this.branches[index]==null) {
+                nextTree = new PrefixTree<T>();
+                this.branches[index] = nextTree;
+            }
+            else {
+                nextTree = this.branches[index];
+            }
+            nextTree.add(rest, data);
+        }
+    }
 }
