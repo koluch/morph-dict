@@ -88,7 +88,7 @@ public class Lookup {
                         form = new WordForm();
                         form.setAncode(buf1);
                         form.setBase(base);
-                        form.setFlexion(buf2);
+                        form.setEnding(buf2);
                         lex.setBase(form);
 
                         // Write common ancode
@@ -107,7 +107,7 @@ public class Lookup {
 
                             form.setAncode(flexMatchinRecord.ancode);
                             form.setBase(base);
-                            form.setFlexion(flexMatchinRecord.ending);
+                            form.setEnding(flexMatchinRecord.ending);
 
                             lex.AddOmonim(form);
                         }

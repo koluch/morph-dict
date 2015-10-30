@@ -21,22 +21,24 @@
 package ru.koluch.textWork.dictionary.prefixTree;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class PrefixTree<T> {
 
     public PrefixTree[] branches;
 
-    public T data;
-
-    public PrefixTree(T data) {
-        this.data = data;
-    }
+    public List<T> data;
 
     public PrefixTree() {
     }
 
     public void add(String wordForm, T data) {
         if(wordForm.length()==0) {
-            this.data = data;
+            if(this.data == null) {
+                this.data = new ArrayList<>();
+            }
+            this.data.add(data);
         }
         else {
             char nextBranch = wordForm.charAt(0);

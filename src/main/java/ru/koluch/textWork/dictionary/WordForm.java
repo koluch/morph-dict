@@ -12,9 +12,11 @@ package ru.koluch.textWork.dictionary;
  */
 public class WordForm {
     
+    private String prefix;
+    
     private String base;
     
-    private String flexion;
+    private String ending;
     
     private String ancode;
     
@@ -25,10 +27,19 @@ public class WordForm {
         this.ancode = ancode;
     }
     
-    public WordForm(String base, String flexion, String ancode) {
+    public WordForm(String prefix, String base, String ending, String ancode) {
+        this.prefix = prefix != null ? prefix : "";
         this.base = base;
-        this.flexion = flexion;
+        this.ending = ending;
         this.ancode = ancode;
+    }
+
+    public String getPrefix() {
+        return prefix;
+    }
+
+    public void setPrefix(String prefix) {
+        this.prefix = prefix;
     }
 
     public void setBase(String base) {
@@ -40,12 +51,12 @@ public class WordForm {
     }
 
     
-    public void setFlexion(String flexion) {
-        this.flexion = flexion;
+    public void setEnding(String ending) {
+        this.ending = ending;
     }
 
-    public String getFlexion() {
-        return flexion;
+    public String getEnding() {
+        return ending;
     }
    
     
@@ -61,13 +72,18 @@ public class WordForm {
     {
         StringBuilder result = new StringBuilder();
         result.append('|');
-        result.append(flexion);
+        result.append(ending);
         result.append('^');
         result.append(ancode);
         return result.toString();
     }
 
-
-    
-    
+    @Override
+    public String toString() {
+        return "WordForm{"
+                +prefix
+                +base
+                +ending
+        +"}";
+    }
 }

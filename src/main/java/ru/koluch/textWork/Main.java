@@ -2,7 +2,6 @@ package ru.koluch.textWork;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.List;
 
 import ru.koluch.textWork.dictionary.Dictionary;
 import ru.koluch.textWork.dictionary.DictionaryParser;
@@ -27,7 +26,7 @@ public class Main {
 
 
         TreeBuilder treeBuilder = new TreeBuilder();
-        PrefixTree<Object> build = treeBuilder.build(dictionary);
+        PrefixTree<Lexeme> build = treeBuilder.build(dictionary);
 
         testOnData(lookup, params);
 
@@ -43,7 +42,7 @@ public class Main {
             ArrayList<Lexeme> lex_list = lookup.find("КРАСИВЕЕ");
             Lexeme first = lex_list.get(0);
 
-            System.out.println(first.getBase().getBase() + first.getBase().getFlexion());
+            System.out.println(first.getBase().getBase() + first.getBase().getEnding());
 
             System.out.println("Gender: " + params.getGender(first.getBase().getAncode()));
             System.out.println("Plurality: " + params.getNumber(first.getBase().getAncode()));
@@ -69,7 +68,7 @@ public class Main {
 //            else
 //            {
 //                Lexeme first = lex_list.get(0);
-//                System.out.println(first.getBase().getBase() + first.getBase().getFlexion());
+//                System.out.println(first.getBase().getBase() + first.getBase().getEnding());
 //            }
 ///*
 ////            ArrayList<Lexeme> lex_list = morphParser.find("собаками");

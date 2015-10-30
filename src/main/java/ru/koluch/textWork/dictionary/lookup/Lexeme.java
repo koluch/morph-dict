@@ -119,7 +119,7 @@ public class Lexeme {
         result.append('^');
         result.append(this.getCommonAn());
         result.append('^');
-        result.append(this.base.getFlexion());
+        result.append(this.base.getEnding());
         result.append('^');
         result.append(this.base.getAncode());
         Iterator it = this.omonims.iterator();
@@ -151,7 +151,7 @@ public class Lexeme {
         this.setCommonAn(buf.substring(a, b));
         
         a = b+1; b = buf.indexOf("^", a);
-        this.base.setFlexion(buf.substring(a, b));
+        this.base.setEnding(buf.substring(a, b));
         
         this.base.setAncode(buf.substring(b+1,b+3));
         

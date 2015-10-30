@@ -21,16 +21,18 @@
 package ru.koluch.textWork.dictionary.prefixTree;
 
 import ru.koluch.textWork.dictionary.Dictionary;
+import ru.koluch.textWork.dictionary.lookup.Lexeme;
 
 public class TreeBuilder {
 
-    public PrefixTree<Object> build(Dictionary dictionary) {
-        PrefixTree<Object> result = new PrefixTree<>();
-        for (String wordForm : dictionary.allForms()) {
-            if(!wordForm.contains("#") && !wordForm.contains("-") ) {
-                result.add(wordForm.toLowerCase(), "some data");
+    public PrefixTree<Lexeme> build(Dictionary dictionary) {
+        PrefixTree<Lexeme> result = new PrefixTree<>();
+        dictionary.iterateLexemes((wordForm, lex) -> {
+            if (!wordForm.contains("#") && !wordForm.contains("-")) {
+                result.add(wordForm.toLowerCase(), lex);
             }
-        }
+            return null;
+        });
         return result;
     }
 

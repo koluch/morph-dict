@@ -20,9 +20,11 @@
  */
 package ru.koluch.textWork.dictionary;
 
+import ru.koluch.textWork.dictionary.lookup.Lexeme;
 import ru.koluch.textWork.dictionary.lookup.LexemeRec;
 
 import java.util.*;
+import java.util.function.BiFunction;
 
 public class Dictionary {
     public List<List<ParadigmRule>> allRules = new ArrayList<>();
@@ -33,7 +35,57 @@ public class Dictionary {
         this.baseToLexemes = baseToLexemes;
     }
 
+    
+    public void iterateLexemes(BiFunction<String, Lexeme, Void> f) {
+        ArrayList<String> result = new ArrayList<>(10000000);
+        for (Map.Entry<String, List<LexemeRec>> entry : baseToLexemes.entrySet()) {
+            String base = entry.getKey();
+            for (LexemeRec lexemeRec : entry.getValue()) {
+                List<ParadigmRule> paradigmRule = allRules.get(lexemeRec.mod);
+
+                // Create lexeme
+                Lexeme lex = new Lexeme();
+                ParadigmRule firstEnding = paradigmRule.get(0);
+                
+                // Get basic ancodes and endings, create main wordform
+                lex.setBase(new WordForm(
+                        firstEnding.prefix,
+                        base,
+                        firstEnding.ending,
+                        firstEnding.ancode
+                ));
+
+                // Write common ancode
+                if(lexemeRec.ancode!=null)
+                {
+                    lex.setCommonAn(lexemeRec.ancode);
+                }
+                else
+                {
+                    lex.setCommonAn(" -");
+                }
+
+                for (ParadigmRule flexMatchinRecord : paradigmRule) {
+                    // For each ancode create wordform and register in lexeme as homonym
+                    lex.AddOmonim(new WordForm(
+                            flexMatchinRecord.prefix,
+                            base,
+                            flexMatchinRecord.ending,
+                            flexMatchinRecord.ancode
+                    ));
+                }
+
+                for (WordForm wordForm : lex.getOmonims()) {
+                    f.apply(wordForm.getPrefix() + wordForm.getBase() + wordForm.getEnding(), lex);
+                }
+            }
+        }
+    }
+    
+
+    
     public List<String> allForms() {
+
         ArrayList<String> result = new ArrayList<>(10000000);
         for (Map.Entry<String, List<LexemeRec>> entry : baseToLexemes.entrySet()) {
             String base = entry.getKey();
