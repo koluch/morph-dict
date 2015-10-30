@@ -84,10 +84,10 @@ public class DictionaryParser {
 
                 String basis = lemParts[0];
                 Integer paradigmNum = Integer.valueOf(lemParts[1]);
-                // String accentParadigmNum = matcher.group(2);
-                // String userSessionNum = matcher.group(3);
+                Integer accentParadigmNum = Integer.valueOf(lemParts[2]);
+                Integer userSessionNum = Integer.valueOf(lemParts[3]);
                 String anc = lemParts[4];
-                // String prefix = matcher.group(5);
+                String prefix = lemParts[5];
 
                 List<LexemeRec> modelList;
                 if (baseToLexemes.containsKey(basis)) {
@@ -97,10 +97,13 @@ public class DictionaryParser {
                     baseToLexemes.put(basis, modelList);
                 }
 
-                LexemeRec lexemRec = new LexemeRec();
-                lexemRec.paradigmNumber = paradigmNum;
-                lexemRec.ancode = anc;
-                modelList.add(lexemRec);
+                modelList.add(new LexemeRec(
+                    paradigmNum,
+                    anc,
+                    accentParadigmNum,
+                    userSessionNum,
+                    prefix
+                ));
 
             }
 

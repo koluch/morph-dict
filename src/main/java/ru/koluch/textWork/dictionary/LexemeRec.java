@@ -11,16 +11,18 @@ package ru.koluch.textWork.dictionary;
  * "Nikolay Mavrenkov <koluch@koluch.ru>"
  */
 public class LexemeRec {
-    public int paradigmNumber;
-    public String ancode;
+    public final Integer paradigmNum;
+    public final String ancode;
+    public final Integer accentParadigmNum;
+    public final Integer userSessionNum;
+    public final String prefix;
 
-    public LexemeRec() {
-    }
 
-    public LexemeRec(int paradigmNumber, String ancode) {
-        this.paradigmNumber = paradigmNumber;
+    public LexemeRec(Integer paradigmNum, String ancode, Integer accentParadigmNum, Integer userSessionNum, String prefix) {
+        this.paradigmNum = paradigmNum;
         this.ancode = ancode;
+        this.accentParadigmNum = accentParadigmNum;
+        this.userSessionNum = userSessionNum;
+        this.prefix = prefix;
     }
-
-    
 }
