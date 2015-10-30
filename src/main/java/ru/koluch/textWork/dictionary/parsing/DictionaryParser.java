@@ -23,8 +23,6 @@ public class DictionaryParser {
     public ru.koluch.textWork.dictionary.Dictionary parse(Reader reader) throws ParseException {
 
 
-        List<List<ParadigmRule>> allRules = new ArrayList<>();
-        HashMap<String, List<LexemeRec>> baseToLexemes = new HashMap<>();
 
         /**
          * Dictionary loading
@@ -33,6 +31,7 @@ public class DictionaryParser {
 
 
             // Load flexias models
+            List<List<ParadigmRule>> allRules = new ArrayList<>();
             int num = Integer.valueOf(fin.readLine());
             Pattern paradigmListEx = Pattern.compile("\\%([^\\%]+)");
             Pattern paradigmEx = Pattern.compile("([^\\*]*)\\*([^\\*]*)(:?\\*([^\\*]*))?");
@@ -74,9 +73,9 @@ public class DictionaryParser {
             }
 
             // Read lexemes
+            List<LexemeRec> lexemeRecs = new ArrayList<>();
             num = Integer.decode(fin.readLine());
 
-            Pattern pseudoBasisEx = Pattern.compile("^(.+)\\s(.+)\\s(.+)\\s(.+)\\s(.+)\\s(.+)$");
             for (int i = 0; i < num; ++i) {
                 String lem = fin.readLine();
 
@@ -89,15 +88,8 @@ public class DictionaryParser {
                 String anc = lemParts[4];
                 String prefix = lemParts[5];
 
-                List<LexemeRec> modelList;
-                if (baseToLexemes.containsKey(basis)) {
-                    modelList = baseToLexemes.get(basis);
-                } else {
-                    modelList = new ArrayList<>();
-                    baseToLexemes.put(basis, modelList);
-                }
-
-                modelList.add(new LexemeRec(
+                lexemeRecs.add(new LexemeRec(
+                    basis,
                     paradigmNum,
                     anc,
                     accentParadigmNum,
@@ -107,7 +99,7 @@ public class DictionaryParser {
 
             }
 
-            return new ru.koluch.textWork.dictionary.Dictionary(allRules, baseToLexemes);
+            return new ru.koluch.textWork.dictionary.Dictionary(allRules, lexemeRecs);
 
         } catch (IOException ex) {
             throw new ParseException(ex);
