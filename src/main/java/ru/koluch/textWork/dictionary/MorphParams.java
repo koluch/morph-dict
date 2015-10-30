@@ -5,8 +5,6 @@
 
 package ru.koluch.textWork.dictionary;
 
-import ru.koluch.textWork.dictionary.lookup.LexemeType;
-
 import java.io.*;
 import java.util.HashMap;
 

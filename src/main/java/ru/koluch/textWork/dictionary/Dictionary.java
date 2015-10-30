@@ -20,9 +20,6 @@
  */
 package ru.koluch.textWork.dictionary;
 
-import ru.koluch.textWork.dictionary.lookup.Lexeme;
-import ru.koluch.textWork.dictionary.lookup.LexemeRec;
-
 import java.util.*;
 import java.util.function.BiFunction;
 

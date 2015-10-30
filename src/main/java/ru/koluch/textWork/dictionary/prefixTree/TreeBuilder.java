@@ -21,7 +21,7 @@
 package ru.koluch.textWork.dictionary.prefixTree;
 
 import ru.koluch.textWork.dictionary.Dictionary;
-import ru.koluch.textWork.dictionary.lookup.Lexeme;
+import ru.koluch.textWork.dictionary.Lexeme;
 
 public class TreeBuilder {
 

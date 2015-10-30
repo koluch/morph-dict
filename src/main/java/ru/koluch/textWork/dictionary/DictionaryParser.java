@@ -1,8 +1,6 @@
 package ru.koluch.textWork.dictionary;
 
 
-import ru.koluch.textWork.dictionary.lookup.LexemeRec;
-
 import java.io.*;
 import java.util.*;
 import java.util.regex.Matcher;
