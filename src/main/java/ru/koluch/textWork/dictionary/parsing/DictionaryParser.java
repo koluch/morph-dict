@@ -58,7 +58,7 @@ public class DictionaryParser {
                 allRules.add(paradigmRules);
             }
 
-            // Skip: accents, journal, prefixes... //todo:implement
+            // Skip: accents, journal... //todo:implement
             num = Integer.decode(fin.readLine());
             for (int i = 0; i < num; ++i) {
                 fin.readLine();
@@ -67,9 +67,12 @@ public class DictionaryParser {
             for (int i = 0; i < num; ++i) {
                 fin.readLine();
             }
+
+            // Read prefixes
+            ArrayList<String> prefixes = new ArrayList<>();
             num = Integer.decode(fin.readLine());
             for (int i = 0; i < num; ++i) {
-                fin.readLine();
+                prefixes.add(fin.readLine());
             }
 
             // Read lexemes
@@ -99,7 +102,7 @@ public class DictionaryParser {
 
             }
 
-            return new ru.koluch.textWork.dictionary.Dictionary(allRules, lexemeRecs);
+            return new ru.koluch.textWork.dictionary.Dictionary(allRules, lexemeRecs, prefixes);
 
         } catch (IOException ex) {
             throw new ParseException(ex);

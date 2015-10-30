@@ -26,10 +26,12 @@ import java.util.function.BiFunction;
 public class Dictionary {
     public List<List<ParadigmRule>> allRules = new ArrayList<>();
     public List<LexemeRec> lexemeRecs = new ArrayList<>();
+    public List<String> prefixes = new ArrayList<>();
 
-    public Dictionary(List<List<ParadigmRule>> allRules, List<LexemeRec> lexemeRecs) {
+    public Dictionary(List<List<ParadigmRule>> allRules, List<LexemeRec> lexemeRecs, List<String> prefixes) {
         this.allRules = allRules;
         this.lexemeRecs = lexemeRecs;
+        this.prefixes = prefixes;
     }
 
     
