@@ -70,7 +70,7 @@ public class Lookup {
 
                 for (LexemeRec lexemeRec : ending_list) {
 
-                    List<ParadigmRule> paradigmRule = dictionary.allRules.get(lexemeRec.mod);
+                    List<ParadigmRule> paradigmRule = dictionary.allRules.get(lexemeRec.paradigmNumber);
 
                     List<ParadigmRule> flexMatchinRecords = paradigmRule.stream().filter((x) -> x.ending.equals(flex)).collect(Collectors.toList());
 

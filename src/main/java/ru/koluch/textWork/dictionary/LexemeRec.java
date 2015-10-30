@@ -11,14 +11,14 @@ package ru.koluch.textWork.dictionary;
  * "Nikolay Mavrenkov <koluch@koluch.ru>"
  */
 public class LexemeRec {
-    public int mod;
+    public int paradigmNumber;
     public String ancode;
 
     public LexemeRec() {
     }
 
-    public LexemeRec(int mod, String ancode) {
-        this.mod = mod;
+    public LexemeRec(int paradigmNumber, String ancode) {
+        this.paradigmNumber = paradigmNumber;
         this.ancode = ancode;
     }
 

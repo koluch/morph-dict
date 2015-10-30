@@ -1,5 +1,8 @@
-package ru.koluch.textWork.dictionary;
+package ru.koluch.textWork.dictionary.parsing;
 
+
+import ru.koluch.textWork.dictionary.LexemeRec;
+import ru.koluch.textWork.dictionary.ParadigmRule;
 
 import java.io.*;
 import java.util.*;
@@ -95,7 +98,7 @@ public class DictionaryParser {
                 }
 
                 LexemeRec lexemRec = new LexemeRec();
-                lexemRec.mod = paradigmNum;
+                lexemRec.paradigmNumber = paradigmNum;
                 lexemRec.ancode = anc;
                 modelList.add(lexemRec);
 

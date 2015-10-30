@@ -38,7 +38,7 @@ public class Dictionary {
         for (Map.Entry<String, List<LexemeRec>> entry : baseToLexemes.entrySet()) {
             String base = entry.getKey();
             for (LexemeRec lexemeRec : entry.getValue()) {
-                List<ParadigmRule> paradigmRule = allRules.get(lexemeRec.mod);
+                List<ParadigmRule> paradigmRule = allRules.get(lexemeRec.paradigmNumber);
 
                 // Create lexeme
                 Lexeme lex = new Lexeme();
@@ -87,7 +87,7 @@ public class Dictionary {
         for (Map.Entry<String, List<LexemeRec>> entry : baseToLexemes.entrySet()) {
             String base = entry.getKey();
             for (LexemeRec lexemeRec : entry.getValue()) {
-                List<ParadigmRule> paradigmRule = allRules.get(lexemeRec.mod);
+                List<ParadigmRule> paradigmRule = allRules.get(lexemeRec.paradigmNumber);
                 for (ParadigmRule ruleRecord : paradigmRule) {
                     result.add(ruleRecord.prefix + base + ruleRecord.ending);
                 }

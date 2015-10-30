@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.ArrayList;
 
 import ru.koluch.textWork.dictionary.Dictionary;
-import ru.koluch.textWork.dictionary.DictionaryParser;
+import ru.koluch.textWork.dictionary.parsing.DictionaryParser;
 import ru.koluch.textWork.dictionary.Lexeme;
 import ru.koluch.textWork.dictionary.MorphParams;
 import ru.koluch.textWork.dictionary.lookup.Lookup;
