@@ -22,20 +22,29 @@ package ru.koluch.textWork;
 
 
 import com.google.gson.*;
-import ru.koluch.textWork.dictionary.Dictionary;
 import ru.koluch.textWork.dictionary.prefixTree.PrefixTree;
 
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.Writer;
+import java.io.*;
 
 public class JsonFilesBuilder {
 
     private int counter;
+    private Writer writer;
+    private Gson gson = new Gson();
 
-    public <T> int build(Writer writer, PrefixTree<T> tree) throws IOException {
-        Gson gson = new Gson();
+    public <T> void build(File dir, PrefixTree<T> tree) throws IOException {
+        try {
+            counter = 0;
+            writer = new BufferedWriter(new FileWriter(new File(dir, "1.json")));
+            traverse(tree);
+        } finally {
+            if(writer!=null) {
+                writer.close();
+            }
+        }
+    }
 
+    public <T> int traverse(PrefixTree<T> tree) throws IOException {
         JsonArray node = new JsonArray();
         JsonObject branches = new JsonObject();
 
@@ -43,19 +52,22 @@ public class JsonFilesBuilder {
             for (int i = 0; i < tree.branches.length; i++) {
                 PrefixTree branch = tree.branches[i];
                 if(branch!=null) {
-                    int index = build(writer, branch);
+                    int index = traverse(branch);
                     branches.add(String.valueOf(i), new JsonPrimitive(index));
                 }
             }
         }
-
         node.add(branches);
-        writer.write(gson.toJson(node));
+        int index = write(gson.toJson(node));
+        return index;
+    }
+
+    private int write(String json) throws IOException {
+        writer.write(json);
         writer.write("\n");
 
         return counter++;
     }
-
 
 
 

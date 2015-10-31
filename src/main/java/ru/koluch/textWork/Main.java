@@ -2,8 +2,6 @@ package ru.koluch.textWork;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 import ru.koluch.textWork.dictionary.Dictionary;
 import ru.koluch.textWork.dictionary.parsing.DictionaryParser;
@@ -37,9 +35,7 @@ public class Main {
 
 
         JsonFilesBuilder jsonFilesBuilder = new JsonFilesBuilder();
-        try(Writer writer = new BufferedWriter(new FileWriter(new File("/Users/koluch/tmp/1.json")))) {
-            jsonFilesBuilder.build(writer, tree);
-        }
+        jsonFilesBuilder.build(new File("/Users/koluch/tmp/json/"), tree);
 
 //        testOnData(lookup, params);
 
