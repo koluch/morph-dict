@@ -24,26 +24,24 @@ import java.util.*;
 import java.util.function.BiFunction;
 
 public class Dictionary {
-    public List<List<ParadigmRule>> allRules = new ArrayList<>();
+    public List<List<ParadigmRule>> paradigms = new ArrayList<>();
     public List<LexemeRec> lexemeRecs = new ArrayList<>();
     public List<String> prefixes = new ArrayList<>();
 
-    public Dictionary(List<List<ParadigmRule>> allRules, List<LexemeRec> lexemeRecs, List<String> prefixes) {
-        this.allRules = allRules;
+    public Dictionary(List<List<ParadigmRule>> paradigms, List<LexemeRec> lexemeRecs, List<String> prefixes) {
+        this.paradigms = paradigms;
         this.lexemeRecs = lexemeRecs;
         this.prefixes = prefixes;
     }
 
     
     public void iterateLexemes(BiFunction<String, Lexeme, Void> f) {
-        ArrayList<String> result = new ArrayList<>(10000000);
-
         for (LexemeRec lexemeRec : lexemeRecs) {
-            List<ParadigmRule> paradigmRule = allRules.get(lexemeRec.paradigmNum);
+            List<ParadigmRule> paradigmRules = paradigms.get(lexemeRec.paradigmNum);
 
             // Create lexeme
             Lexeme lex = new Lexeme();
-            ParadigmRule firstEnding = paradigmRule.get(0);
+            ParadigmRule firstEnding = paradigmRules.get(0);
 
             // Get basic ancodes and endings, create main wordform
             lex.setBase(new WordForm(
@@ -58,12 +56,8 @@ public class Dictionary {
             {
                 lex.setCommonAn(lexemeRec.ancode);
             }
-            else
-            {
-                lex.setCommonAn(" -");
-            }
 
-            for (ParadigmRule flexMatchinRecord : paradigmRule) {
+            for (ParadigmRule flexMatchinRecord : paradigmRules) {
                 // For each ancode create wordform and register in lexeme as homonym
                 lex.AddOmonim(new WordForm(
                         flexMatchinRecord.prefix,
@@ -87,7 +81,7 @@ public class Dictionary {
 //        for (Map.Entry<String, List<LexemeRec>> entry : baseToLexemes.entrySet()) {
 //            String base = entry.getKey();
 //            for (LexemeRec lexemeRec : entry.getValue()) {
-//                List<ParadigmRule> paradigmRule = allRules.get(lexemeRec.paradigmNum);
+//                List<ParadigmRule> paradigmRule = paradigms.get(lexemeRec.paradigmNum);
 //                for (ParadigmRule ruleRecord : paradigmRule) {
 //                    result.add(ruleRecord.prefix + base + ruleRecord.ending);
 //                }

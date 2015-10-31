@@ -34,7 +34,7 @@ public class DictionaryParser {
             List<List<ParadigmRule>> allRules = new ArrayList<>();
             int num = Integer.valueOf(fin.readLine());
             Pattern paradigmListEx = Pattern.compile("\\%([^\\%]+)");
-            Pattern paradigmEx = Pattern.compile("([^\\*]*)\\*([^\\*]*)(:?\\*([^\\*]*))?");
+            Pattern paradigmEx = Pattern.compile("([^\\*]+)\\*([^\\*]+)(?:\\*([^\\*]+))?");
             for (int i = 0; i < num; ++i) {
                 String nextString = fin.readLine();
                 Matcher matcher = paradigmListEx.matcher(nextString);
@@ -49,7 +49,7 @@ public class DictionaryParser {
                     {
                         String ending = paradigmMatcher.group(1);
                         String ancode = paradigmMatcher.group(2);  // Ancode is Anoshkin's code
-                        String prefix = paradigmMatcher.group(4);
+                        String prefix = paradigmMatcher.group(3);
 
                         paradigmRules.add(new ParadigmRule(ending, ancode, prefix));
                     }
