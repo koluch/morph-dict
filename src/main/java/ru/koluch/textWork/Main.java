@@ -35,6 +35,12 @@ public class Main {
         System.out.println("Leafs: " + Metrics.countLeafs(tree));
         System.out.println("Max deep: " + Metrics.countMaxDeep(tree));
 
+
+        JsonFilesBuilder jsonFilesBuilder = new JsonFilesBuilder();
+        try(Writer writer = new BufferedWriter(new FileWriter(new File("/Users/koluch/tmp/1.json")))) {
+            jsonFilesBuilder.build(writer, tree);
+        }
+
 //        testOnData(lookup, params);
 
         System.out.println("Finished!");
