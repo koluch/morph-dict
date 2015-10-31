@@ -10,6 +10,7 @@ import ru.koluch.textWork.dictionary.parsing.DictionaryParser;
 import ru.koluch.textWork.dictionary.Lexeme;
 import ru.koluch.textWork.dictionary.MorphParams;
 import ru.koluch.textWork.dictionary.lookup.Lookup;
+import ru.koluch.textWork.dictionary.prefixTree.Metrics;
 import ru.koluch.textWork.dictionary.prefixTree.PrefixTree;
 import ru.koluch.textWork.dictionary.prefixTree.TreeBuilder;
 
@@ -30,11 +31,11 @@ public class Main {
         TreeBuilder treeBuilder = new TreeBuilder();
         PrefixTree<TreeBuilder.TreeData> tree = treeBuilder.build(dictionary);
 
-        Optional<List<TreeBuilder.TreeData>> data = tree.get("красивый");
+        System.out.println("Nodes: " + Metrics.count(tree));
+        System.out.println("Leafs: " + Metrics.countLeafs(tree));
+        System.out.println("Max deep: " + Metrics.countMaxDeep(tree));
 
-
-
-        testOnData(lookup, params);
+//        testOnData(lookup, params);
 
         System.out.println("Finished!");
 
