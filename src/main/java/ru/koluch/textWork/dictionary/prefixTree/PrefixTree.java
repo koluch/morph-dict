@@ -23,6 +23,7 @@ package ru.koluch.textWork.dictionary.prefixTree;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class PrefixTree<T> {
 
@@ -42,19 +43,7 @@ public class PrefixTree<T> {
         }
         else {
             char nextBranch = wordForm.charAt(0);
-            int index;
-            if(nextBranch >= 'а' && nextBranch <= 'е') {
-                index = nextBranch - 'а';
-            }
-            else if (nextBranch=='ё') {
-                index = 'е' - 'а' + 1;
-            }
-            else if (nextBranch > 'е' && nextBranch <= 'я') {
-                index = nextBranch - 'а' + 1;
-            }
-            else {
-                throw new IllegalArgumentException("Bad branch: '" + nextBranch + "' (allowed only russian letters)");
-            }
+            int index = getIndex(nextBranch);
 
             String rest = wordForm.substring(1);
             if(this.branches==null) {
@@ -70,6 +59,40 @@ public class PrefixTree<T> {
                 nextTree = this.branches[index];
             }
             nextTree.add(rest, data);
+        }
+    }
+
+    private int getIndex(char nextBranch) {
+        int index;
+        if(nextBranch >= 'а' && nextBranch <= 'е') {
+            index = nextBranch - 'а';
+        }
+        else if (nextBranch=='ё') {
+            index = 'е' - 'а' + 1;
+        }
+        else if (nextBranch > 'е' && nextBranch <= 'я') {
+            index = nextBranch - 'а' + 1;
+        }
+        else {
+            throw new IllegalArgumentException("Bad branch: '" + nextBranch + "' (allowed only russian letters)");
+        }
+        return index;
+    }
+
+
+    public Optional<List<T>> get(String wordForm) {
+        if(wordForm.length()==0) {
+            return Optional.ofNullable(this.data);
+        }
+        else {
+            char nextBranch = wordForm.charAt(0);
+            String rest = wordForm.substring(1);
+
+            int index = getIndex(nextBranch);
+            if(this.branches==null || this.branches[index]==null) {
+                return Optional.empty();
+            }
+            return this.branches[index].get(rest);
         }
     }
 }

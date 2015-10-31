@@ -1,5 +1,7 @@
 package ru.koluch.textWork.dictionary;
 
+import java.util.Optional;
+
 /**
  * @author Nikolay Mavrenkov <koluch@koluch.ru>
  *         Date: 9/5/13
@@ -8,15 +10,15 @@ package ru.koluch.textWork.dictionary;
 
 public class ParadigmRule {
 
-    public final String ending;
+    public final Optional<String> ending;
     public final String ancode;
-    public final String prefix;
+    public final Optional<String> prefix;
 
 
-    public ParadigmRule(String ending, String ancode, String prefix) {
-        this.ending = ending != null ? ending : "";
+    public ParadigmRule(Optional<String> ending, String ancode, Optional<String> prefix) {
+        this.ending = ending;
         this.ancode = ancode;
-        this.prefix = prefix != null ? prefix : "";
+        this.prefix = prefix;
     }
 
 

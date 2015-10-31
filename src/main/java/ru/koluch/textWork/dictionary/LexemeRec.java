@@ -5,6 +5,8 @@
 
 package ru.koluch.textWork.dictionary;
 
+import java.util.Optional;
+
 /**
  * Record in lexemes table
  *
@@ -13,18 +15,18 @@ package ru.koluch.textWork.dictionary;
 public class LexemeRec {
     public final String basis;
     public final Integer paradigmNum;
-    public final String ancode;
     public final Integer accentParadigmNum;
     public final Integer userSessionNum;
-    public final String prefix;
+    public final Optional<String> ancode;
+    public final Optional<Integer> prefixParadigmNum;
 
 
-    public LexemeRec(String basis, Integer paradigmNum, String ancode, Integer accentParadigmNum, Integer userSessionNum, String prefix) {
+    public LexemeRec(String basis, Integer paradigmNum, Optional<String> ancode, Integer accentParadigmNum, Integer userSessionNum, Optional<Integer> prefixParadigmNum) {
         this.basis = basis;
         this.paradigmNum = paradigmNum;
-        this.ancode = ancode;
         this.accentParadigmNum = accentParadigmNum;
         this.userSessionNum = userSessionNum;
-        this.prefix = prefix;
+        this.ancode = ancode;
+        this.prefixParadigmNum = prefixParadigmNum;
     }
 }

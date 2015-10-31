@@ -2,6 +2,8 @@ package ru.koluch.textWork;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 import ru.koluch.textWork.dictionary.Dictionary;
 import ru.koluch.textWork.dictionary.parsing.DictionaryParser;
@@ -26,7 +28,11 @@ public class Main {
 
 
         TreeBuilder treeBuilder = new TreeBuilder();
-        PrefixTree<Lexeme> build = treeBuilder.build(dictionary);
+        PrefixTree<TreeBuilder.TreeData> tree = treeBuilder.build(dictionary);
+
+        Optional<List<TreeBuilder.TreeData>> data = tree.get("красивый");
+
+
 
         testOnData(lookup, params);
 

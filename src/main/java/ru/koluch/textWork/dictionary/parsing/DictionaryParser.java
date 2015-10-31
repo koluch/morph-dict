@@ -34,11 +34,10 @@ public class DictionaryParser {
             List<List<ParadigmRule>> allRules = new ArrayList<>();
             int num = Integer.valueOf(fin.readLine());
             Pattern paradigmListEx = Pattern.compile("\\%([^\\%]+)");
-            Pattern paradigmEx = Pattern.compile("([^\\*]+)\\*([^\\*]+)(?:\\*([^\\*]+))?");
+            Pattern paradigmEx = Pattern.compile("([^\\*]+)?\\*([^\\*]+)(?:\\*([^\\*]+))?");
             for (int i = 0; i < num; ++i) {
                 String nextString = fin.readLine();
                 Matcher matcher = paradigmListEx.matcher(nextString);
-                int k = 0;
 
                 List<ParadigmRule> paradigmRules = new ArrayList<>();
                 while(matcher.find())
@@ -51,7 +50,11 @@ public class DictionaryParser {
                         String ancode = paradigmMatcher.group(2);  // Ancode is Anoshkin's code
                         String prefix = paradigmMatcher.group(3);
 
-                        paradigmRules.add(new ParadigmRule(ending, ancode, prefix));
+                        paradigmRules.add(new ParadigmRule(
+                            Optional.ofNullable(ending).map(String::toLowerCase),
+                            ancode,
+                            Optional.ofNullable(prefix).map(String::toLowerCase)
+                        ));
                     }
                 }
 
@@ -72,7 +75,7 @@ public class DictionaryParser {
             ArrayList<String> prefixes = new ArrayList<>();
             num = Integer.decode(fin.readLine());
             for (int i = 0; i < num; ++i) {
-                prefixes.add(fin.readLine());
+                prefixes.add(fin.readLine().toLowerCase());
             }
 
             // Read lexemes
@@ -88,16 +91,16 @@ public class DictionaryParser {
                 Integer paradigmNum = Integer.valueOf(lemParts[1]);
                 Integer accentParadigmNum = Integer.valueOf(lemParts[2]);
                 Integer userSessionNum = Integer.valueOf(lemParts[3]);
-                String anc = lemParts[4];
-                String prefix = lemParts[5];
+                String anc = lemParts[4].equals("-") ? null : lemParts[4];
+                Integer prefixParadigmNum = lemParts[5].equals("-") ? null : Integer.valueOf(lemParts[5]);
 
                 lexemeRecs.add(new LexemeRec(
-                    basis,
+                    basis.toLowerCase(),
                     paradigmNum,
-                    anc,
+                    Optional.ofNullable(anc),
                     accentParadigmNum,
                     userSessionNum,
-                    prefix
+                    Optional.ofNullable(prefixParadigmNum)
                 ));
 
             }
