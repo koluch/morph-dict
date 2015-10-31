@@ -25,6 +25,8 @@ import com.google.gson.*;
 import ru.koluch.textWork.dictionary.prefixTree.PrefixTree;
 
 import java.io.*;
+import java.util.List;
+import java.util.function.Function;
 
 public class JsonFilesBuilder {
 
@@ -32,11 +34,11 @@ public class JsonFilesBuilder {
     private Writer writer;
     private Gson gson = new Gson();
 
-    public <T> void build(File dir, PrefixTree<T> tree) throws IOException {
+    public <T> void build(File dir, PrefixTree<T> tree, Function<List<T>,String> dataSerializer) throws IOException {
         try {
             counter = 0;
             writer = new BufferedWriter(new FileWriter(new File(dir, "1.json")));
-            traverse(tree);
+            traverse(tree, dataSerializer);
         } finally {
             if(writer!=null) {
                 writer.close();
@@ -44,7 +46,7 @@ public class JsonFilesBuilder {
         }
     }
 
-    public <T> int traverse(PrefixTree<T> tree) throws IOException {
+    public <T> int traverse(PrefixTree<T> tree, Function<List<T>,String> dataSerializer) throws IOException {
         JsonArray node = new JsonArray();
         JsonObject branches = new JsonObject();
 
@@ -52,12 +54,15 @@ public class JsonFilesBuilder {
             for (int i = 0; i < tree.branches.length; i++) {
                 PrefixTree branch = tree.branches[i];
                 if(branch!=null) {
-                    int index = traverse(branch);
+                    int index = traverse(branch, dataSerializer);
                     branches.add(String.valueOf(i), new JsonPrimitive(index));
                 }
             }
         }
         node.add(branches);
+        if(tree.data!=null) {
+            node.add(new JsonPrimitive(dataSerializer.apply(tree.data)));
+        }
         int index = write(gson.toJson(node));
         return index;
     }

@@ -3,6 +3,9 @@ package ru.koluch.textWork;
 import java.io.*;
 import java.util.ArrayList;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import ru.koluch.textWork.dictionary.Dictionary;
 import ru.koluch.textWork.dictionary.parsing.DictionaryParser;
 import ru.koluch.textWork.dictionary.Lexeme;
@@ -35,7 +38,16 @@ public class Main {
 
 
         JsonFilesBuilder jsonFilesBuilder = new JsonFilesBuilder();
-        jsonFilesBuilder.build(new File("/Users/koluch/tmp/json/"), tree);
+        Gson gson = new Gson();
+        jsonFilesBuilder.build(new File("/Users/koluch/tmp/json/"), tree, (data) -> {
+            JsonArray json = new JsonArray();
+            for (TreeBuilder.TreeData treeData : data) {
+                JsonArray sub = new JsonArray();
+                sub.add(treeData.ancode);
+                json.add(sub);
+            }
+            return gson.toJson(json);
+        });
 
 //        testOnData(lookup, params);
 
