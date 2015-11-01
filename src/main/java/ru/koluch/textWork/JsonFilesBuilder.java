@@ -65,7 +65,7 @@ public class JsonFilesBuilder {
 
         if(tree.branches != null) {
             for (int i = 0; i < tree.branches.length; i++) {
-                PrefixTree branch = tree.branches[i];
+                PrefixTree<T> branch = tree.branches[i];
                 if(branch!=null) {
                     int index = traverse(branch, dataSerializer);
                     char br;
