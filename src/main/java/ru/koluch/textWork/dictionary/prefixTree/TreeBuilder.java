@@ -38,7 +38,7 @@ public class TreeBuilder {
 
             for (ParadigmRule paradigmRule : paradigmRules) {
                 String wordForm = superPrefix + lexemeRec.basis + paradigmRule.ending.orElse("");
-                if(!(wordForm.contains("#") || wordForm.contains("-"))) {
+                if(!(wordForm.contains("#") || wordForm.contains("-"))) { //todo: fix
                     TreeData treeData = new TreeData(paradigmRule.ancode, lexemeRecNum);
                     result.add(wordForm, treeData);
                 }
