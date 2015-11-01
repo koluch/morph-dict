@@ -35,7 +35,10 @@ import java.util.function.Function;
 public class JsonFilesBuilder {
 
 
-    public static final int ITEMS_PER_FILE = 500;
+    public static final int TREE_ITEMS_PER_FILE = 500;
+    public static final int DICT_LEX_ITEMS_PER_FILE = 250;
+    public static final int DICT_PARADIGM_ITEMS_PER_FILE = 10;
+    public static final int DICT_PREFIX_ITEMS_PER_FILE = 500;
 
     public <T> void build(File parentDir, Dictionary dict, PrefixTree<T> tree, Function<List<T>, JsonElement> dataSerializer) throws IOException {
 
@@ -43,7 +46,7 @@ public class JsonFilesBuilder {
         // Write tree
         File treeDir = new File(parentDir, "tree"); treeDir.mkdir();
         int root;
-        try(JsonArrayWriter treeJsonWriter = new JsonArrayWriter(ITEMS_PER_FILE, treeDir)) {
+        try(JsonArrayWriter treeJsonWriter = new JsonArrayWriter(TREE_ITEMS_PER_FILE, treeDir)) {
             root = writeTree(treeJsonWriter, tree, dataSerializer);
         }
 
@@ -52,9 +55,9 @@ public class JsonFilesBuilder {
         File dictParadigmDir = new File(parentDir, "dict_paradigms"); dictParadigmDir.mkdir();
         File dictPrefixDir = new File(parentDir, "dict_prefixes"); dictPrefixDir.mkdir();
         try(
-            JsonArrayWriter lexRecsWriter = new JsonArrayWriter(ITEMS_PER_FILE, dictLexDir);
-            JsonArrayWriter paradigmsRecsWriter = new JsonArrayWriter(ITEMS_PER_FILE, dictParadigmDir);
-            JsonArrayWriter prefixesWriter = new JsonArrayWriter(ITEMS_PER_FILE, dictPrefixDir)
+            JsonArrayWriter lexRecsWriter = new JsonArrayWriter(DICT_LEX_ITEMS_PER_FILE, dictLexDir);
+            JsonArrayWriter paradigmsRecsWriter = new JsonArrayWriter(DICT_PARADIGM_ITEMS_PER_FILE, dictParadigmDir);
+            JsonArrayWriter prefixesWriter = new JsonArrayWriter(DICT_PREFIX_ITEMS_PER_FILE, dictPrefixDir)
         ) {
             writeDict(lexRecsWriter, paradigmsRecsWriter, prefixesWriter, dict);
         }
@@ -63,7 +66,10 @@ public class JsonFilesBuilder {
         try(BufferedWriter writer = new BufferedWriter(new FileWriter(new File(parentDir, "index.json")))) {
             JsonObject indexJson = new JsonObject();
             indexJson.add("root", new JsonPrimitive(root));
-            indexJson.add("itemsPerFile", new JsonPrimitive(ITEMS_PER_FILE));
+            indexJson.add("treeItemsPerFile", new JsonPrimitive(TREE_ITEMS_PER_FILE));
+            indexJson.add("dictLexItemsPerFile", new JsonPrimitive(DICT_LEX_ITEMS_PER_FILE));
+            indexJson.add("dictParadigmItemsPerFile", new JsonPrimitive(DICT_PARADIGM_ITEMS_PER_FILE));
+            indexJson.add("dictPrefixItemsPerFile", new JsonPrimitive(DICT_PREFIX_ITEMS_PER_FILE));
             indexJson.add("treeDir", new JsonPrimitive(treeDir.getName()));
             indexJson.add("dictLexDir", new JsonPrimitive(dictLexDir.getName()));
             indexJson.add("dictParadigmDir", new JsonPrimitive(dictParadigmDir.getName()));
