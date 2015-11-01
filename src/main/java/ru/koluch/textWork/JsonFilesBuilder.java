@@ -25,28 +25,41 @@ import com.google.gson.*;
 import ru.koluch.textWork.dictionary.prefixTree.PrefixTree;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
 public class JsonFilesBuilder {
 
     private int counter;
+    private int linesPerFile = 500;
     private Writer writer;
     private Gson gson = new Gson();
+    private File dir;
 
-    public <T> void build(File dir, PrefixTree<T> tree, Function<List<T>,String> dataSerializer) throws IOException {
+    public <T> void build(File dir, PrefixTree<T> tree, Function<List<T>,JsonElement> dataSerializer) throws IOException {
+        this.dir = dir;
+        int root;
         try {
-            counter = 0;
-            writer = new BufferedWriter(new FileWriter(new File(dir, "1.json")));
-            traverse(tree, dataSerializer);
+            root = traverse(tree, dataSerializer);
         } finally {
             if(writer!=null) {
+                flush();
                 writer.close();
             }
         }
+        try(BufferedWriter writer = new BufferedWriter(new FileWriter(new File(dir, "index.json")))) {
+            JsonObject indexJson = new JsonObject();
+            indexJson.add("root", new JsonPrimitive(root));
+            indexJson.add("linesPerFile", new JsonPrimitive(linesPerFile));
+            GsonBuilder gsonBuilder = new GsonBuilder();
+            gsonBuilder.setPrettyPrinting();
+            Gson gson = gsonBuilder.create();
+            writer.write(gson.toJson(indexJson));
+        }
     }
 
-    public <T> int traverse(PrefixTree<T> tree, Function<List<T>,String> dataSerializer) throws IOException {
+    public <T> int traverse(PrefixTree<T> tree, Function<List<T>,JsonElement> dataSerializer) throws IOException {
         JsonArray node = new JsonArray();
         JsonObject branches = new JsonObject();
 
@@ -55,23 +68,66 @@ public class JsonFilesBuilder {
                 PrefixTree branch = tree.branches[i];
                 if(branch!=null) {
                     int index = traverse(branch, dataSerializer);
-                    branches.add(String.valueOf(i), new JsonPrimitive(index));
+                    char br;
+                    char iCh = (char) ('а' + i);
+                    if(iCh >= 'а' && iCh <= 'е') {
+                        br = iCh;
+                    }
+                    else if(iCh == 'е' + 1) {
+                        br = 'ё';
+                    }
+                    else {
+                        br = (char) (iCh-1);
+                    }
+
+                    branches.add(String.valueOf(br), new JsonPrimitive(index));
                 }
             }
         }
         node.add(branches);
         if(tree.data!=null) {
-            node.add(new JsonPrimitive(dataSerializer.apply(tree.data)));
+            node.add(dataSerializer.apply(tree.data));
         }
         int index = write(gson.toJson(node));
         return index;
     }
 
+
+    private List<String> lines = new ArrayList<>();
+
     private int write(String json) throws IOException {
-        writer.write(json);
-        writer.write("\n");
+
+        if(counter % linesPerFile == 0) {
+            if(writer!=null) {
+                flush();
+                writer.close();
+            }
+            writer = new BufferedWriter(new FileWriter(new File(dir, (counter / linesPerFile) + ".json")));
+//            writer.write('[');
+//            writer.write('\n');
+        }
+
+//        writer.write(json);
+//        if((counter+1) % linesPerFile != 0) {
+//            writer.write(",");
+//        }
+//        writer.write("\n");
+        lines.add(json);
 
         return counter++;
+    }
+
+    private void flush() throws IOException {
+        writer.write("[\n");
+        for (int i = 0; i < lines.size(); i++) {
+            writer.write(lines.get(i));
+            writer.write("\n");
+            if(i!=lines.size()-1) {
+                writer.write(",");
+            }
+        }
+        writer.write("]");
+        lines.clear();
     }
 
 

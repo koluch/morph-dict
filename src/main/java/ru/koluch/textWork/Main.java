@@ -2,14 +2,15 @@ package ru.koluch.textWork;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import ru.koluch.textWork.dictionary.Dictionary;
+import ru.koluch.textWork.dictionary.*;
 import ru.koluch.textWork.dictionary.parsing.DictionaryParser;
-import ru.koluch.textWork.dictionary.Lexeme;
-import ru.koluch.textWork.dictionary.MorphParams;
 import ru.koluch.textWork.dictionary.lookup.Lookup;
 import ru.koluch.textWork.dictionary.prefixTree.Metrics;
 import ru.koluch.textWork.dictionary.prefixTree.PrefixTree;
@@ -44,9 +45,17 @@ public class Main {
             for (TreeBuilder.TreeData treeData : data) {
                 JsonArray sub = new JsonArray();
                 sub.add(treeData.ancode);
+
+                LexemeRec lexemeRec = treeData.lexemeRec;
+                String superPrefix = lexemeRec.prefixParadigmNum.map(dictionary.prefixes::get).orElse("");
+                List<ParadigmRule> paradigmRules = dictionary.paradigms.get(lexemeRec.paradigmNum);
+                ParadigmRule paradigmRule = paradigmRules.get(0);
+                String baseForm = superPrefix + lexemeRec.basis + paradigmRule.ending.orElse("");
+                sub.add(baseForm);
+
                 json.add(sub);
             }
-            return gson.toJson(json);
+            return json;
         });
 
 //        testOnData(lookup, params);
