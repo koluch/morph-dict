@@ -50,21 +50,24 @@ public class JsonFilesBuilder {
         // Write dictionary
         File dictLexDir = new File(parentDir, "dict_lexs"); dictLexDir.mkdir();
         File dictParadigmDir = new File(parentDir, "dict_paradigms"); dictParadigmDir.mkdir();
+        File dictPrefixDir = new File(parentDir, "dict_prefixes"); dictPrefixDir.mkdir();
         try(
             JsonArrayWriter lexRecsWriter = new JsonArrayWriter(ITEMS_PER_FILE, dictLexDir);
-            JsonArrayWriter paradigmsRecsWriter = new JsonArrayWriter(ITEMS_PER_FILE, dictParadigmDir)
+            JsonArrayWriter paradigmsRecsWriter = new JsonArrayWriter(ITEMS_PER_FILE, dictParadigmDir);
+            JsonArrayWriter prefixesWriter = new JsonArrayWriter(ITEMS_PER_FILE, dictPrefixDir)
         ) {
-            writeDict(lexRecsWriter, paradigmsRecsWriter, dict);
+            writeDict(lexRecsWriter, paradigmsRecsWriter, prefixesWriter, dict);
         }
 
 
         try(BufferedWriter writer = new BufferedWriter(new FileWriter(new File(parentDir, "index.json")))) {
             JsonObject indexJson = new JsonObject();
             indexJson.add("root", new JsonPrimitive(root));
-            indexJson.add("linesPerFile", new JsonPrimitive(ITEMS_PER_FILE));
+            indexJson.add("itemsPerFile", new JsonPrimitive(ITEMS_PER_FILE));
             indexJson.add("treeDir", new JsonPrimitive(treeDir.getName()));
             indexJson.add("dictLexDir", new JsonPrimitive(dictLexDir.getName()));
             indexJson.add("dictParadigmDir", new JsonPrimitive(dictParadigmDir.getName()));
+            indexJson.add("dictPrefixDir", new JsonPrimitive(dictPrefixDir.getName()));
             GsonBuilder gsonBuilder = new GsonBuilder();
             gsonBuilder.setPrettyPrinting();
             Gson gson = gsonBuilder.create();
@@ -105,7 +108,7 @@ public class JsonFilesBuilder {
         return index;
     }
 
-    private void writeDict(JsonArrayWriter dictWriter, JsonArrayWriter paradigmsWriter, Dictionary dict) throws IOException {
+    private void writeDict(JsonArrayWriter dictWriter, JsonArrayWriter paradigmsWriter, JsonArrayWriter prefixesWriter, Dictionary dict) throws IOException {
 
         for (List<ParadigmRule> paradigm : dict.paradigms) {
             JsonArray rulesJson = new JsonArray();
@@ -128,6 +131,10 @@ public class JsonFilesBuilder {
             lexemeRecJson.add(lexemeRec.ancode.<JsonElement>map(JsonPrimitive::new).orElse(JsonNull.INSTANCE));
             lexemeRecJson.add(lexemeRec.prefixParadigmNum.<JsonElement>map(JsonPrimitive::new).orElse(JsonNull.INSTANCE));
             dictWriter.write(lexemeRecJson);
+        }
+
+        for (String prefix : dict.prefixes) {
+            prefixesWriter.write(new JsonPrimitive(prefix));
         }
     }
 
