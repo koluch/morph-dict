@@ -5,109 +5,63 @@
     <title></title>
     <script src="jquery-2.1.4.min.js" type="text/javascript"></script>
     <script>
-        $(function () {
-            function jPromise(def) {
-                return new Promise(function(done, fail){
-                    def.done(done).fail(fail);
-                })
-            }
 
-            $("#search").click(function () {
-                var toSearch = $("#word").val();
-                jPromise($.ajax("index.json")).then(function (indexFile) {
+        function jPromise(def) {
+            return new Promise(function(done, fail){
+                def.done(done).fail(fail);
+            })
+        }
 
-                    var branchIndex = indexFile.root;
-                    var file = Math.floor(branchIndex / indexFile.linesPerFile) + ".json";
+        function search(toSearch) {
 
-                    var promise = jPromise($.ajax(file)).then(function (dataFile) {
-                        var offset = branchIndex % indexFile.linesPerFile;
-                        var node = dataFile[offset];
-                        return {
-                            "status": "next",
-                            "node": node
-                        }
-                    });
-
-                    toSearch.split("").forEach(function (ch) {
-                        promise = promise.then(function (data) {
-                            if (data.status == "next") {
-                                var node = data.node;
-                                var branches = node[0];
-                                var nextBranch = branches[ch];
-                                if (nextBranch) {
-                                    var file = Math.floor(nextBranch / indexFile.linesPerFile) + ".json";
-                                    return jPromise($.ajax(file)).then(function (dataFile) {
-                                        var offset = nextBranch % indexFile.linesPerFile;
-                                        var node = dataFile[offset];
-                                        return {
-                                            "status": "next",
-                                            "node": node
-                                        }
-                                    });
-                                }
-                                else {
-                                    return {
-                                        "status": "not_found",
-                                        "data": toSearch
-                                    }
-                                }
+            return jPromise($.ajax("index.json")).then(function(indexFile){
+                return new Promise(function (resolve, fail) {
+                    function search(nextNodeIndex, rest) {
+                        var file = Math.floor(nextNodeIndex / indexFile.linesPerFile) + ".json";
+                        $.ajax(file).promise().then(function (data) {
+                            var offset = nextNodeIndex % indexFile.linesPerFile;
+                            var next = data[offset];
+                            if (rest.length == 0) {
+                                resolve(next[1]);
                             }
                             else {
-                                return data;
-                            }
-                        });
-                    });
-
-                    promise = promise.then(function (data) {
-                        if (data.status == "next") {
-                            return data.node[1];
-                        }
-                    });
-
-                    return promise;
-
-                }).then(function (result) {
-                    console.log({result:result});
-                });
-
-
-            });
-
-            window.search = function (toSearch) {
-
-                return jPromise($.ajax("index.json")).then(function(indexFile){
-                    return new Promise(function (resolve, fail) {
-                        function search(nextNodeIndex, rest) {
-                            var file = Math.floor(nextNodeIndex / indexFile.linesPerFile) + ".json";
-                            $.ajax(file).promise().then(function (data) {
-                                var offset = nextNodeIndex % indexFile.linesPerFile;
-                                var next = data[offset];
-                                if (rest.length == 0) {
-                                    resolve(next[1]);
+                                var branches = next[0];
+                                var branchIndex = branches[rest.charAt(0)];
+                                if (branchIndex) {
+                                    search(branchIndex, rest.substr(1));
                                 }
                                 else {
-                                    var branches = next[0];
-                                    var branchIndex = branches[rest.charAt(0)];
-                                    if (branchIndex) {
-                                        search(branchIndex, rest.substr(1));
-                                    }
-                                    else {
-                                        resolve("not found: " + toSearch);
-                                    }
+                                    resolve("not found: " + toSearch);
                                 }
-                            }, function (xhr, e) {
-                                fail(e);
-                            })
-                        }
-                        search(indexFile.root, toSearch);
-                    });
+                            }
+                        }, function (xhr, e) {
+                            fail(e);
+                        })
+                    }
+                    search(indexFile.root, toSearch);
                 });
-            }
+            });
+        }
+
+        $(function () {
+
+            $("#search").submit(function(e){
+                var toSearch = $("#word").val();
+                search(toSearch).then(function(result){
+                    $("#result").text(JSON.stringify(result));
+                }).catch(function(e){
+                    throw e;
+                });
+                e.preventDefault();
+            });
+
         })
     </script>
 </head>
 <body>
-<input type="text" id="word" value="ты"/>
-<button id="search">Search</button>
+<form id="search">
+    <p><label>Word form: <input type="text" id="word" value="ты"/></label><button type="submit">Search</button></p>
+    <p><label>Result: <div id="result"></div></label></p>
+</form>
 </body>
 </html>
