@@ -21,25 +21,25 @@
 package ru.koluch.textWork.dictionary.prefixTree;
 
 import ru.koluch.textWork.dictionary.Dictionary;
-import ru.koluch.textWork.dictionary.Lexeme;
 import ru.koluch.textWork.dictionary.LexemeRec;
 import ru.koluch.textWork.dictionary.ParadigmRule;
 
 import java.util.List;
-import java.util.Optional;
 
 public class TreeBuilder {
 
     public PrefixTree<TreeData> build(Dictionary dictionary) {
         PrefixTree<TreeData> result = new PrefixTree<>();
-        for (LexemeRec lexemeRec : dictionary.lexemeRecs) {
+
+        for (int lexemeRecNum = 0; lexemeRecNum < dictionary.lexemeRecs.size(); lexemeRecNum++) {
+            LexemeRec lexemeRec = dictionary.lexemeRecs.get(lexemeRecNum);
             List<ParadigmRule> paradigmRules = dictionary.paradigms.get(lexemeRec.paradigmNum);
             String superPrefix = lexemeRec.prefixParadigmNum.map(dictionary.prefixes::get).orElse("");
 
             for (ParadigmRule paradigmRule : paradigmRules) {
                 String wordForm = superPrefix + lexemeRec.basis + paradigmRule.ending.orElse("");
                 if(!(wordForm.contains("#") || wordForm.contains("-"))) {
-                    TreeData treeData = new TreeData(paradigmRule.ancode, lexemeRec);
+                    TreeData treeData = new TreeData(paradigmRule.ancode, lexemeRecNum);
                     result.add(wordForm, treeData);
                 }
             }
@@ -51,11 +51,11 @@ public class TreeBuilder {
 
     public static class TreeData {
         public final String ancode;
-        public final LexemeRec lexemeRec;
+        public final Integer lexemeRecNum;
 
-        public TreeData(String ancode, LexemeRec lexemeRec) {
+        public TreeData(String ancode, Integer lexemeRecNum) {
             this.ancode = ancode;
-            this.lexemeRec = lexemeRec;
+            this.lexemeRecNum = lexemeRecNum;
         }
     }
 

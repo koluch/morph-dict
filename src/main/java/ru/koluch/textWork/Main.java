@@ -40,19 +40,12 @@ public class Main {
 
         JsonFilesBuilder jsonFilesBuilder = new JsonFilesBuilder();
         Gson gson = new Gson();
-        jsonFilesBuilder.build(new File("/Users/koluch/tmp/json/"), tree, (data) -> {
+        jsonFilesBuilder.build(new File("/Users/koluch/tmp/json/"), dictionary, tree, (data) -> {
             JsonArray json = new JsonArray();
             for (TreeBuilder.TreeData treeData : data) {
                 JsonArray sub = new JsonArray();
                 sub.add(treeData.ancode);
-
-                LexemeRec lexemeRec = treeData.lexemeRec;
-                String superPrefix = lexemeRec.prefixParadigmNum.map(dictionary.prefixes::get).orElse("");
-                List<ParadigmRule> paradigmRules = dictionary.paradigms.get(lexemeRec.paradigmNum);
-                ParadigmRule paradigmRule = paradigmRules.get(0);
-                String baseForm = superPrefix + lexemeRec.basis + paradigmRule.ending.orElse("");
-                sub.add(baseForm);
-
+                sub.add(treeData.lexemeRecNum);
                 json.add(sub);
             }
             return json;

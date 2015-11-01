@@ -22,36 +22,49 @@ package ru.koluch.textWork;
 
 
 import com.google.gson.*;
+import com.google.gson.stream.JsonWriter;
+import ru.koluch.textWork.dictionary.Dictionary;
+import ru.koluch.textWork.dictionary.LexemeRec;
+import ru.koluch.textWork.dictionary.ParadigmRule;
 import ru.koluch.textWork.dictionary.prefixTree.PrefixTree;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
 public class JsonFilesBuilder {
 
-    private int counter;
-    private int linesPerFile = 500;
-    private Writer writer;
-    private Gson gson = new Gson();
-    private File dir;
 
-    public <T> void build(File dir, PrefixTree<T> tree, Function<List<T>,JsonElement> dataSerializer) throws IOException {
-        this.dir = dir;
+    public static final int ITEMS_PER_FILE = 500;
+
+    public <T> void build(File parentDir, Dictionary dict, PrefixTree<T> tree, Function<List<T>, JsonElement> dataSerializer) throws IOException {
+
+
+        // Write tree
+        File treeDir = new File(parentDir, "tree"); treeDir.mkdir();
         int root;
-        try {
-            root = traverse(tree, dataSerializer);
-        } finally {
-            if(writer!=null) {
-                flush();
-                writer.close();
-            }
+        try(JsonArrayWriter treeJsonWriter = new JsonArrayWriter(ITEMS_PER_FILE, treeDir)) {
+            root = writeTree(treeJsonWriter, tree, dataSerializer);
         }
-        try(BufferedWriter writer = new BufferedWriter(new FileWriter(new File(dir, "index.json")))) {
+
+        // Write dictionary
+        File dictLexDir = new File(parentDir, "dict_lexs"); dictLexDir.mkdir();
+        File dictParadigmDir = new File(parentDir, "dict_paradigms"); dictParadigmDir.mkdir();
+        try(
+            JsonArrayWriter lexRecsWriter = new JsonArrayWriter(ITEMS_PER_FILE, dictLexDir);
+            JsonArrayWriter paradigmsRecsWriter = new JsonArrayWriter(ITEMS_PER_FILE, dictParadigmDir)
+        ) {
+            writeDict(lexRecsWriter, paradigmsRecsWriter, dict);
+        }
+
+
+        try(BufferedWriter writer = new BufferedWriter(new FileWriter(new File(parentDir, "index.json")))) {
             JsonObject indexJson = new JsonObject();
             indexJson.add("root", new JsonPrimitive(root));
-            indexJson.add("linesPerFile", new JsonPrimitive(linesPerFile));
+            indexJson.add("linesPerFile", new JsonPrimitive(ITEMS_PER_FILE));
+            indexJson.add("treeDir", new JsonPrimitive(treeDir.getName()));
+            indexJson.add("dictLexDir", new JsonPrimitive(dictLexDir.getName()));
+            indexJson.add("dictParadigmDir", new JsonPrimitive(dictParadigmDir.getName()));
             GsonBuilder gsonBuilder = new GsonBuilder();
             gsonBuilder.setPrettyPrinting();
             Gson gson = gsonBuilder.create();
@@ -59,7 +72,7 @@ public class JsonFilesBuilder {
         }
     }
 
-    public <T> int traverse(PrefixTree<T> tree, Function<List<T>,JsonElement> dataSerializer) throws IOException {
+    private  <T> int writeTree(JsonArrayWriter jsonArrayWriter, PrefixTree<T> tree, Function<List<T>, JsonElement> dataSerializer) throws IOException {
         JsonArray node = new JsonArray();
         JsonObject branches = new JsonObject();
 
@@ -67,7 +80,7 @@ public class JsonFilesBuilder {
             for (int i = 0; i < tree.branches.length; i++) {
                 PrefixTree<T> branch = tree.branches[i];
                 if(branch!=null) {
-                    int index = traverse(branch, dataSerializer);
+                    int index = writeTree(jsonArrayWriter, branch, dataSerializer);
                     char br;
                     char iCh = (char) ('а' + i);
                     if(iCh >= 'а' && iCh <= 'е') {
@@ -88,48 +101,73 @@ public class JsonFilesBuilder {
         if(tree.data!=null) {
             node.add(dataSerializer.apply(tree.data));
         }
-        int index = write(gson.toJson(node));
+        int index = jsonArrayWriter.write(node);
         return index;
     }
 
+    private void writeDict(JsonArrayWriter dictWriter, JsonArrayWriter paradigmsWriter, Dictionary dict) throws IOException {
 
-    private List<String> lines = new ArrayList<>();
-
-    private int write(String json) throws IOException {
-
-        if(counter % linesPerFile == 0) {
-            if(writer!=null) {
-                flush();
-                writer.close();
+        for (List<ParadigmRule> paradigm : dict.paradigms) {
+            JsonArray rulesJson = new JsonArray();
+            for (ParadigmRule paradigmRule : paradigm) {
+                JsonArray ruleJson = new JsonArray();
+                ruleJson.add(paradigmRule.ending.<JsonElement>map(JsonPrimitive::new).orElse(JsonNull.INSTANCE));
+                ruleJson.add(paradigmRule.ancode);
+                ruleJson.add(paradigmRule.prefix.<JsonElement>map(JsonPrimitive::new).orElse(JsonNull.INSTANCE));
+                rulesJson.add(ruleJson);
             }
-            writer = new BufferedWriter(new FileWriter(new File(dir, (counter / linesPerFile) + ".json")));
-//            writer.write('[');
-//            writer.write('\n');
+            paradigmsWriter.write(rulesJson);
         }
 
-//        writer.write(json);
-//        if((counter+1) % linesPerFile != 0) {
-//            writer.write(",");
-//        }
-//        writer.write("\n");
-        lines.add(json);
-
-        return counter++;
+        for (LexemeRec lexemeRec : dict.lexemeRecs) {
+            JsonArray lexemeRecJson = new JsonArray();
+            lexemeRecJson.add(lexemeRec.basis);
+            lexemeRecJson.add(lexemeRec.paradigmNum);
+            lexemeRecJson.add(lexemeRec.accentParadigmNum);
+            lexemeRecJson.add(lexemeRec.userSessionNum);
+            lexemeRecJson.add(lexemeRec.ancode.<JsonElement>map(JsonPrimitive::new).orElse(JsonNull.INSTANCE));
+            lexemeRecJson.add(lexemeRec.prefixParadigmNum.<JsonElement>map(JsonPrimitive::new).orElse(JsonNull.INSTANCE));
+            dictWriter.write(lexemeRecJson);
+        }
     }
 
-    private void flush() throws IOException {
-        writer.write("[\n");
-        for (int i = 0; i < lines.size(); i++) {
-            writer.write(lines.get(i));
-            writer.write("\n");
-            if(i!=lines.size()-1) {
-                writer.write(",");
+
+    private static class JsonArrayWriter implements AutoCloseable {
+        private final Gson gson = new Gson();
+        private int counter = 0;
+        private final int itemsPerFile;
+        private File dir;
+        JsonWriter jsonWriter;
+
+        public JsonArrayWriter(int itemsPerFile, File dir) throws IOException {
+            this.itemsPerFile = itemsPerFile;
+            this.dir = dir;
+        }
+
+        public int write(JsonElement json) throws IOException {
+            if(counter % itemsPerFile == 0) {
+                if(jsonWriter!=null) {
+                    jsonWriter.endArray();
+                    jsonWriter.close();
+                }
+                String fileName = (counter / itemsPerFile) + ".json";
+                jsonWriter = new JsonWriter(new FileWriter(new File(dir, fileName)));
+                jsonWriter.beginArray();
+            }
+
+            jsonWriter.jsonValue(gson.toJson(json));
+            return counter++;
+        }
+
+
+        @Override
+        public void close() throws IOException {
+            if(jsonWriter!=null) {
+                jsonWriter.endArray();
+                jsonWriter.close();
             }
         }
-        writer.write("]");
-        lines.clear();
     }
-
 
 
 }
