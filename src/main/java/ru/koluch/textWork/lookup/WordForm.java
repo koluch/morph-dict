@@ -3,7 +3,9 @@
  * and open the template in the editor.
  */
 
-package ru.koluch.textWork.dictionary;
+package ru.koluch.textWork.lookup;
+
+import java.util.Optional;
 
 /**
  * Wordform. Stores ending and ancode
@@ -12,33 +14,27 @@ package ru.koluch.textWork.dictionary;
  */
 public class WordForm {
     
-    private String prefix;
+    private Optional<String> prefix;
     
     private String base;
     
-    private String ending;
+    private Optional<String> ending;
     
     private String ancode;
     
-    public WordForm() {
-    }
 
-    public WordForm(String ancode) {
-        this.ancode = ancode;
-    }
-    
-    public WordForm(String prefix, String base, String ending, String ancode) {
-        this.prefix = prefix != null ? prefix : "";
+    public WordForm(Optional<String> prefix, String base, Optional<String> ending, String ancode) {
+        this.prefix = prefix;
         this.base = base;
         this.ending = ending;
         this.ancode = ancode;
     }
 
-    public String getPrefix() {
+    public Optional<String> getPrefix() {
         return prefix;
     }
 
-    public void setPrefix(String prefix) {
+    public void setPrefix(Optional<String> prefix) {
         this.prefix = prefix;
     }
 
@@ -51,11 +47,11 @@ public class WordForm {
     }
 
     
-    public void setEnding(String ending) {
+    public void setEnding(Optional<String> ending) {
         this.ending = ending;
     }
 
-    public String getEnding() {
+    public Optional<String> getEnding() {
         return ending;
     }
    
@@ -67,23 +63,18 @@ public class WordForm {
     public String getAncode() {
         return ancode;
     }
-    
-    public String getNormalForm()
-    {
-        StringBuilder result = new StringBuilder();
-        result.append('|');
-        result.append(ending);
-        result.append('^');
-        result.append(ancode);
-        return result.toString();
-    }
 
     @Override
     public String toString() {
-        return "WordForm{"
-                +prefix
-                +base
-                +ending
-        +"}";
+        return "WordForm{" +
+                "prefix=" + prefix +
+                ", base='" + base + '\'' +
+                ", ending=" + ending +
+                ", ancode='" + ancode + '\'' +
+                '}';
+    }
+
+    public String makeWord() {
+        return prefix.orElse("") +base + ending.orElse("");
     }
 }

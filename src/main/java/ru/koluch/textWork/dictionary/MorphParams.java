@@ -5,8 +5,12 @@
 
 package ru.koluch.textWork.dictionary;
 
+import ru.koluch.textWork.lookup.LexemeType;
+import ru.koluch.textWork.lookup.WordForm;
+
 import java.io.*;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Class for work with lexem parameters. Works with Anoshkin's codes
@@ -248,6 +252,10 @@ public class MorphParams {
     {
         char[] ancode_chars = ancode_list.get(ancode);
         return ancode_chars[1];
+    }
+
+    public List<Attribute> getAttributes(WordForm foundWordForm) {
+        throw new RuntimeException("Not implemented yet!");  //To change body of created methods use File | Settings | File Templates.
     }
 
     public enum Plurality {SINGULAR, PLURAL, UNDEF}

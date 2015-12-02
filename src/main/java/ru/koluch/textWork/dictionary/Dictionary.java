@@ -21,17 +21,16 @@
 package ru.koluch.textWork.dictionary;
 
 import java.util.*;
-import java.util.function.BiFunction;
 
 public class Dictionary {
     public List<List<ParadigmRule>> paradigms = new ArrayList<>();
     public List<LexemeRec> lexemeRecs = new ArrayList<>();
-    public List<String> prefixes = new ArrayList<>();
+    public List<String> prefixeParadigms = new ArrayList<>();
 
-    public Dictionary(List<List<ParadigmRule>> paradigms, List<LexemeRec> lexemeRecs, List<String> prefixes) {
+    public Dictionary(List<List<ParadigmRule>> paradigms, List<LexemeRec> lexemeRecs, List<String> prefixeParadigms) {
         this.paradigms = paradigms;
         this.lexemeRecs = lexemeRecs;
-        this.prefixes = prefixes;
+        this.prefixeParadigms = prefixeParadigms;
     }
 
     

@@ -24,6 +24,7 @@ import ru.koluch.textWork.dictionary.Dictionary;
 import ru.koluch.textWork.dictionary.LexemeRec;
 import ru.koluch.textWork.dictionary.ParadigmRule;
 
+import java.util.Iterator;
 import java.util.List;
 
 public class TreeBuilder {
@@ -31,18 +32,25 @@ public class TreeBuilder {
     public PrefixTree<TreeData> build(Dictionary dictionary) {
         PrefixTree<TreeData> result = new PrefixTree<>();
 
-        for (int lexemeRecNum = 0; lexemeRecNum < dictionary.lexemeRecs.size(); lexemeRecNum++) {
-            LexemeRec lexemeRec = dictionary.lexemeRecs.get(lexemeRecNum);
+        Iterator<LexemeRec> lexemeRecIterator = dictionary.lexemeRecs.iterator();
+        int lexemeRecNum = 0;
+        while (lexemeRecIterator.hasNext()) {
+            LexemeRec lexemeRec = lexemeRecIterator.next();
             List<ParadigmRule> paradigmRules = dictionary.paradigms.get(lexemeRec.paradigmNum);
-            String superPrefix = lexemeRec.prefixParadigmNum.map(dictionary.prefixes::get).orElse("");
+            String superPrefix = lexemeRec.prefixParadigmNum.map(dictionary.prefixeParadigms::get).orElse("");
 
-            for (ParadigmRule paradigmRule : paradigmRules) {
+            Iterator<ParadigmRule> paragirmRuleIterator = paradigmRules.iterator();
+            int paradigmNum = 0;
+            while (paragirmRuleIterator.hasNext()) {
+                ParadigmRule paradigmRule = paragirmRuleIterator.next();
                 String wordForm = superPrefix + lexemeRec.basis + paradigmRule.ending.orElse("");
                 if(!(wordForm.contains("#") || wordForm.contains("-"))) { //todo: fix
-                    TreeData treeData = new TreeData(paradigmRule.ancode, lexemeRecNum);
+                    TreeData treeData = new TreeData(paradigmNum, lexemeRecNum);
                     result.add(wordForm, treeData);
                 }
+                paradigmNum++;
             }
+            lexemeRecNum++;
         }
 
         return result;
@@ -50,11 +58,11 @@ public class TreeBuilder {
 
 
     public static class TreeData {
-        public final String ancode;
         public final Integer lexemeRecNum;
+        public final Integer paradigmNum;
 
-        public TreeData(String ancode, Integer lexemeRecNum) {
-            this.ancode = ancode;
+        public TreeData(Integer paradigmNum, Integer lexemeRecNum) {
+            this.paradigmNum = paradigmNum;
             this.lexemeRecNum = lexemeRecNum;
         }
     }

@@ -139,7 +139,7 @@ public class JsonFilesBuilder {
             dictWriter.write(lexemeRecJson);
         }
 
-        for (String prefix : dict.prefixes) {
+        for (String prefix : dict.prefixeParadigms) {
             prefixesWriter.write(new JsonPrimitive(prefix));
         }
     }
