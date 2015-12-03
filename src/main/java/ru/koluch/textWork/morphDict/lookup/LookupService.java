@@ -8,6 +8,8 @@
 package ru.koluch.textWork.morphDict.lookup;
 
 
+import ru.koluch.textWork.morphDict.lookup.data.LookupResult;
+
 import java.util.ArrayList;
 
 /**

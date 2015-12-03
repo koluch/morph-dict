@@ -5,7 +5,7 @@
  * <p>
  * Created: 30.10.2015 01:20
  */
-package ru.koluch.textWork.morphDict.lookup;
+package ru.koluch.textWork.morphDict.lookup.data;
 
 import java.util.ArrayList;
 import java.util.Optional;

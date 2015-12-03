@@ -8,8 +8,12 @@
 package ru.koluch.textWork.morphDict.lookup;
 
 
-import ru.koluch.textWork.morphDict.dictionary.*;
-import ru.koluch.textWork.morphDict.dictionary.Dictionary;
+import ru.koluch.textWork.morphDict.dictionary.data.Dictionary;
+import ru.koluch.textWork.morphDict.dictionary.data.LexemeRec;
+import ru.koluch.textWork.morphDict.dictionary.data.ParadigmRule;
+import ru.koluch.textWork.morphDict.lookup.data.Lexeme;
+import ru.koluch.textWork.morphDict.lookup.data.LookupResult;
+import ru.koluch.textWork.morphDict.lookup.data.WordForm;
 import ru.koluch.textWork.morphDict.prefixTree.PrefixTree;
 import ru.koluch.textWork.morphDict.dictionary.DictionaryHelper;
 

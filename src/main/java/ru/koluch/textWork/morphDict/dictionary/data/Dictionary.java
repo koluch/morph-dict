@@ -5,14 +5,14 @@
  * <p>
  * Created: 27.10.2015 23:07
  */
-package ru.koluch.textWork.morphDict.dictionary;
+package ru.koluch.textWork.morphDict.dictionary.data;
 
 import java.util.*;
 
 /**
  * Class containing parsed info from morphs.mrd.
  * <p>
- * Immutable data-class.
+ * Immutable data-class
  */
 public class Dictionary {
     public final List<List<ParadigmRule>> paradigmList;
