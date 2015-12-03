@@ -40,7 +40,7 @@ public class PrefixTreeLookupService implements LookupService {
      * @return list of lexemes-homonym, containing specified wordform
      */
     @Override
-    public ArrayList<LookupResult> find(String toFind)
+    public ArrayList<LookupResult> lookup(String toFind)
     {
         ArrayList<LookupResult> lookupResultList = new ArrayList<>();
 

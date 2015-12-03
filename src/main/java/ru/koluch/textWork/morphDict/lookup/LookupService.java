@@ -16,5 +16,5 @@ import java.util.ArrayList;
  * Interface for implementations of services, providing lookup facility
  */
 public interface LookupService {
-    ArrayList<LookupResult> find(String toFind);
+    ArrayList<LookupResult> lookup(String toFind);
 }

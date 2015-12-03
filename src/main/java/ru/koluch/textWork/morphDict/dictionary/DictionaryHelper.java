@@ -22,6 +22,10 @@ import static ru.koluch.textWork.morphDict.dictionary.Attribute.*;
 
 public class DictionaryHelper {
 
+    private DictionaryHelper() {
+
+    }
+
     /*
         Parsing
      */
@@ -919,7 +923,7 @@ public class DictionaryHelper {
 
     /**
      * Return attributes associeted with specified ancode. Ancode is a short for "Anoshkin's code", 2-letters string,
-     * specified for any wordform and for lexeme. You can find more information on aot.ru site, see links section
+     * specified for any wordform and for lexeme. You can lookup more information on aot.ru site, see links section
      * in README file
      *
      * @param ancode Anoshkin's code

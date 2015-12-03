@@ -19,9 +19,9 @@ public class Lexeme {
 
     
     /**
-     * Homonyms of current wordform
+     * Homonyms of current word form
      */
-    public final ArrayList<WordForm> omonims;
+    public final ArrayList<WordForm> homonyms;
     
 
     /**
@@ -29,8 +29,8 @@ public class Lexeme {
      */
     public final Optional<String> commonAncode;
     
-    public Lexeme(ArrayList<WordForm> omonims, Optional<String> commonAn) {
-        this.omonims = omonims;
+    public Lexeme(ArrayList<WordForm> homonyms, Optional<String> commonAn) {
+        this.homonyms = homonyms;
         this.commonAncode = commonAn;
     }
 

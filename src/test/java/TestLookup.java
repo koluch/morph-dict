@@ -57,7 +57,6 @@ public class TestLookup {
     @Before
     public void init() throws IOException, DictionaryHelper.ParseException {
         Dictionary dictionary = DictionaryHelper.parse(new InputStreamReader(Dictionary.class.getResourceAsStream("/morphs.mrd"), "UTF-8"));
-        DictionaryHelper dictionaryHelper = new DictionaryHelper();
         PrefixTree<DictionaryHelper.TreeData> tree = DictionaryHelper.buildPrefixTree(dictionary);
         lookup = new PrefixTreeLookupService(dictionary, tree);
     }
@@ -65,7 +64,7 @@ public class TestLookup {
 
     @Test
     public void testNoun() throws IOException {
-        ArrayList<LookupResult> resultList = lookup.find("собакой");
+        ArrayList<LookupResult> resultList = lookup.lookup("собакой");
 
         assertThat(resultList.size(), is(1));
 
@@ -78,14 +77,14 @@ public class TestLookup {
         assertThat(attributes, hasItem(SINGULAR));
 
         Lexeme lexeme = resultList.get(0).lexeme;
-        WordForm wordForm = lexeme.omonims.get(0);
+        WordForm wordForm = lexeme.homonyms.get(0);
         assertThat(wordForm.makeWord(), is("собака"));
 
     }
 
     @Test
     public void testVerb() throws IOException {
-        ArrayList<LookupResult> resultList = lookup.find("побегут");
+        ArrayList<LookupResult> resultList = lookup.lookup("побегут");
 
         assertThat(resultList.size(), is(1));
 
@@ -99,10 +98,11 @@ public class TestLookup {
         assertThat(attributes, hasItem(PLURAL));
 
         Lexeme lexeme = resultList.get(0).lexeme;
-        assertFalse(lexeme.omonims.isEmpty());
+        assertFalse(lexeme.homonyms.isEmpty());
 
-        WordForm wordForm = lexeme.omonims.get(0);
+        WordForm wordForm = lexeme.homonyms.get(0);
         assertThat(wordForm.makeWord(), is("побежать"));
 
     }
+
 }
