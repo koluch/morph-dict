@@ -20,7 +20,13 @@
  */
 package ru.koluch.textWork.morphDict.dictionary;
 
+import ru.koluch.textWork.morphDict.lookup.Lexeme;
+import ru.koluch.textWork.morphDict.lookup.WordForm;
+
 import java.util.*;
+import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
+import java.util.function.Consumer;
 
 public class Dictionary {
     public List<List<ParadigmRule>> paradigms = new ArrayList<>();
@@ -34,59 +40,24 @@ public class Dictionary {
     }
 
     
-//    public void iterateLexemes(BiFunction<String, Lexeme, Void> f) {
-//        for (LexemeRec lexemeRec : lexemeRecs) {
-//            List<ParadigmRule> paradigmRules = paradigms.get(lexemeRec.paradigmNum);
-//
-//            // Create lexeme
-//            Lexeme lex = new Lexeme();
-//            ParadigmRule firstEnding = paradigmRules.get(0);
-//
-//            // Get basic ancodes and endings, create main wordform
-//            lex.setBase(new WordForm(
-//                    firstEnding.prefix,
-//                    lexemeRec.basis,
-//                    firstEnding.ending,
-//                    firstEnding.ancode
-//            ));
-//
-//            // Write common ancode
-//            if(lexemeRec.ancode!=null)
-//            {
-//                lex.setCommonAn(lexemeRec.ancode);
-//            }
-//
-//            for (ParadigmRule flexMatchinRecord : paradigmRules) {
-//                // For each ancode create wordform and register in lexeme as homonym
-//                lex.AddOmonim(new WordForm(
-//                        flexMatchinRecord.prefix,
-//                        lexemeRec.basis,
-//                        flexMatchinRecord.ending,
-//                        flexMatchinRecord.ancode
-//                ));
-//            }
-//
-//            for (WordForm wordForm : lex.getOmonims()) {
-//                f.apply(wordForm.getPrefix() + wordForm.getBase() + wordForm.getEnding(), lex);
-//            }
-//        }
-//    }
+    public void iterateLexemes(Consumer<Lexeme> consumer) {
+        for (LexemeRec lexemeRec : lexemeRecs) {
+            List<ParadigmRule> paradigmRules = paradigms.get(lexemeRec.paradigmNum);
+            ArrayList<WordForm> omonims = new ArrayList<>();
 
+            for (ParadigmRule flexMatchinRecord : paradigmRules) {
+                // For each ancode create wordform and register in lexeme as homonym
+                omonims.add(new WordForm(
+                        flexMatchinRecord.prefix,
+                        lexemeRec.basis,
+                        flexMatchinRecord.ending,
+                        flexMatchinRecord.ancode
+                ));
+            }
 
-
-//    public List<String> allForms() {
-//
-//        ArrayList<String> result = new ArrayList<>(10000000);
-//        for (Map.Entry<String, List<LexemeRec>> entry : baseToLexemes.entrySet()) {
-//            String base = entry.getKey();
-//            for (LexemeRec lexemeRec : entry.getValue()) {
-//                List<ParadigmRule> paradigmRule = paradigms.get(lexemeRec.paradigmNum);
-//                for (ParadigmRule ruleRecord : paradigmRule) {
-//                    result.add(ruleRecord.prefix + base + ruleRecord.ending);
-//                }
-//            }
-//        }
-//        return result;
-//    }
+            // Create lexeme and pass it to callback
+            consumer.accept(new Lexeme(omonims, lexemeRec.ancode));
+        }
+    }
 
 }

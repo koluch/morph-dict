@@ -23,8 +23,8 @@ package ru.koluch.textWork.morphDict.lookup;
 
 import ru.koluch.textWork.morphDict.dictionary.*;
 import ru.koluch.textWork.morphDict.dictionary.Dictionary;
-import ru.koluch.textWork.morphDict.dictionary.prefixTree.PrefixTree;
-import ru.koluch.textWork.morphDict.dictionary.prefixTree.TreeBuilder;
+import ru.koluch.textWork.morphDict.prefixTree.PrefixTree;
+import ru.koluch.textWork.morphDict.dictionary.TreeBuilder;
 
 import java.util.*;
 

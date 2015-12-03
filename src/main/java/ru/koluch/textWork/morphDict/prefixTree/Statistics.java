@@ -18,20 +18,20 @@
  * Author:  Nikolay Mavrenkov <koluch@koluch.ru>
  * Created: 31.10.2015 18:26
  */
-package ru.koluch.textWork.morphDict.dictionary.prefixTree;
+package ru.koluch.textWork.morphDict.prefixTree;
 
 /**
- * Auxiliary class to count things inside tree
+ * Auxiliary class to countNodes things inside tree
  */
 public class Statistics {
 
-    public static  <T> Integer count(PrefixTree<T> tree) {
+    public static  <T> Integer countNodes(PrefixTree<T> tree) {
         int result = 1;
         if(tree.branches!=null) {
             for (int i = 0; i < tree.branches.length; i++) {
                 PrefixTree branch = tree.branches[i];
                 if(branch!=null) {
-                    result += count(branch);
+                    result += countNodes(branch);
                 }
             }
         }

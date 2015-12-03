@@ -26,7 +26,7 @@ import com.google.gson.stream.JsonWriter;
 import ru.koluch.textWork.morphDict.dictionary.Dictionary;
 import ru.koluch.textWork.morphDict.dictionary.LexemeRec;
 import ru.koluch.textWork.morphDict.dictionary.ParadigmRule;
-import ru.koluch.textWork.morphDict.dictionary.prefixTree.PrefixTree;
+import ru.koluch.textWork.morphDict.prefixTree.PrefixTree;
 
 import java.io.*;
 import java.util.List;

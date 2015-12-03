@@ -31,8 +31,8 @@ import org.junit.Test;
 import ru.koluch.textWork.morphDict.dictionary.Attribute;
 import ru.koluch.textWork.morphDict.dictionary.Dictionary;
 import ru.koluch.textWork.morphDict.dictionary.parsing.DictionaryParser;
-import ru.koluch.textWork.morphDict.dictionary.prefixTree.PrefixTree;
-import ru.koluch.textWork.morphDict.dictionary.prefixTree.TreeBuilder;
+import ru.koluch.textWork.morphDict.prefixTree.PrefixTree;
+import ru.koluch.textWork.morphDict.dictionary.TreeBuilder;
 import ru.koluch.textWork.morphDict.lookup.PrefixTreeLookup;
 import ru.koluch.textWork.morphDict.lookup.LookupResult;
 

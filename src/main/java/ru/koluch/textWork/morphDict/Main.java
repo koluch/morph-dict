@@ -21,7 +21,7 @@ public class Main {
 //        TreeBuilder treeBuilder = new TreeBuilder();
 //        PrefixTree<TreeBuilder.TreeData> tree = treeBuilder.build(dictionary);
 //
-//        System.out.println("Nodes: " + Metrics.count(tree));
+//        System.out.println("Nodes: " + Metrics.countNodes(tree));
 //        System.out.println("Leafs: " + Metrics.countLeafs(tree));
 //        System.out.println("Max deep: " + Metrics.countMaxDeep(tree));
 //
