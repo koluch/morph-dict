@@ -31,6 +31,7 @@ import org.junit.Test;
 import ru.koluch.textWork.morphDict.dictionary.Attribute;
 import ru.koluch.textWork.morphDict.dictionary.data.Dictionary;
 import ru.koluch.textWork.morphDict.lookup.data.Lexeme;
+import ru.koluch.textWork.morphDict.lookup.data.WordForm;
 import ru.koluch.textWork.morphDict.prefixTree.PrefixTree;
 import ru.koluch.textWork.morphDict.dictionary.DictionaryHelper;
 import ru.koluch.textWork.morphDict.lookup.PrefixTreeLookupService;
@@ -41,7 +42,9 @@ import java.util.ArrayList;
 import java.util.Set;
 
 import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 import static ru.koluch.textWork.morphDict.dictionary.Attribute.*;
 
 
@@ -73,6 +76,11 @@ public class TestLookup {
         assertThat(attributes, hasItem(FEMININE_GENDER));
         assertThat(attributes, hasItem(INSTRUMENTAL_CASE));
         assertThat(attributes, hasItem(SINGULAR));
+
+        Lexeme lexeme = resultList.get(0).lexeme;
+        WordForm wordForm = lexeme.omonims.get(0);
+        assertThat(wordForm.makeWord(), is("собака"));
+
     }
 
     @Test
@@ -91,6 +99,10 @@ public class TestLookup {
         assertThat(attributes, hasItem(PLURAL));
 
         Lexeme lexeme = resultList.get(0).lexeme;
-        assertThat(lexeme.omonims.size(), is(1));
+        assertFalse(lexeme.omonims.isEmpty());
+
+        WordForm wordForm = lexeme.omonims.get(0);
+        assertThat(wordForm.makeWord(), is("побежать"));
+
     }
 }

@@ -186,6 +186,10 @@ public class DictionaryHelper {
     /*
         Working with attributes
      */
+
+    /**
+     * Map of ancodes to sets of attributes build according to rgramtab.tab aot.ru file
+     */
     private final static Map<String, Set<Attribute>> ancodeToAttributes = new HashMap<>();
     static {
         ancodeToAttributes.put("аа", new HashSet<>(Arrays.asList(NOUN, MASCULINE_GENDER, SINGULAR, NOMINATIVE_CASE)));
