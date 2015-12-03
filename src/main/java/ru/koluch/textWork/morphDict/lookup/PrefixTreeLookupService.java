@@ -44,35 +44,38 @@ public class PrefixTreeLookupService implements LookupService {
     {
         ArrayList<LookupResult> lookupResultList = new ArrayList<>();
 
-        List<DictionaryHelper.TreeData> treeDataList = prefixTree.get(toFind).get();//todo: check for null
-        for (DictionaryHelper.TreeData treeData : treeDataList) {
-            LexemeRec lexemeRec = dictionary.lexemeRecs.get(treeData.lexemeRecNum);
-            Optional<String> commonAncode = lexemeRec.ancode;
-            List<ParadigmRule> paradigmRules = dictionary.paradigmList.get(lexemeRec.paradigmIndex);
-            Optional<String> globalPrefix = lexemeRec.prefixParadigmIndex.map(dictionary.prefixeParadigmList::get);
+        Optional<List<DictionaryHelper.TreeData>> treeDataListOpt = prefixTree.get(toFind);
+        if(treeDataListOpt.isPresent()) {
+            List<DictionaryHelper.TreeData> treeDataList = treeDataListOpt.get();
+            for (DictionaryHelper.TreeData treeData : treeDataList) {
+                LexemeRec lexemeRec = dictionary.lexemeRecs.get(treeData.lexemeRecNum);
+                Optional<String> commonAncode = lexemeRec.ancode;
+                List<ParadigmRule> paradigmRules = dictionary.paradigmList.get(lexemeRec.paradigmIndex);
+                Optional<String> globalPrefix = lexemeRec.prefixParadigmIndex.map(dictionary.prefixeParadigmList::get);
 
-            // Build found wordform
-            ParadigmRule foundParadigmRule = paradigmRules.get(treeData.paradigmNum);
-            WordForm foundWordForm = new WordForm(
-                Optional.of(globalPrefix.orElse("") + foundParadigmRule.prefix.orElse("")),
-                lexemeRec.basis,
-                foundParadigmRule.ending,
-                foundParadigmRule.ancode
-            );
-
-            // Build lexeme
-            ArrayList<WordForm> omonims = new ArrayList<>();
-            for (ParadigmRule paradigmRule : paradigmRules) {
-                omonims.add(new WordForm(
-                        Optional.of(globalPrefix.orElse("") + paradigmRule.prefix.orElse("")),
+                // Build found wordform
+                ParadigmRule foundParadigmRule = paradigmRules.get(treeData.paradigmNum);
+                WordForm foundWordForm = new WordForm(
+                        Optional.of(globalPrefix.orElse("") + foundParadigmRule.prefix.orElse("")),
                         lexemeRec.basis,
-                        paradigmRule.ending,
-                        paradigmRule.ancode
-                ));
-            }
-            Lexeme lexeme = new Lexeme(omonims, commonAncode);
+                        foundParadigmRule.ending,
+                        foundParadigmRule.ancode
+                );
 
-            lookupResultList.add(new LookupResult(foundWordForm, lexeme));
+                // Build lexeme
+                ArrayList<WordForm> omonims = new ArrayList<>();
+                for (ParadigmRule paradigmRule : paradigmRules) {
+                    omonims.add(new WordForm(
+                            Optional.of(globalPrefix.orElse("") + paradigmRule.prefix.orElse("")),
+                            lexemeRec.basis,
+                            paradigmRule.ending,
+                            paradigmRule.ancode
+                    ));
+                }
+                Lexeme lexeme = new Lexeme(omonims, commonAncode);
+
+                lookupResultList.add(new LookupResult(foundWordForm, lexeme));
+            }
         }
 
         return lookupResultList;
