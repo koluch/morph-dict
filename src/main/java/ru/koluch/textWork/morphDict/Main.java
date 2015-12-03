@@ -2,14 +2,14 @@ package ru.koluch.textWork.morphDict;
 
 import java.io.*;
 
-import ru.koluch.textWork.morphDict.dictionary.parsing.DictionaryParser;
+import ru.koluch.textWork.morphDict.dictionary.DictionaryHelper;
 
 public class Main {
 
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args) throws IOException, DictionaryParser.ParseException {
+	public static void main(String[] args) throws IOException, DictionaryHelper.ParseException {
 
 //        DictionaryParser dictionaryParser = new DictionaryParser();
 //        MorphParams params = new MorphParams(new InputStreamReader(Main.class.getResourceAsStream("/rgramtab.tab"), "UTF-8"));
@@ -19,7 +19,7 @@ public class Main {
 //
 //
 //        TreeBuilder treeBuilder = new TreeBuilder();
-//        PrefixTree<TreeBuilder.TreeData> tree = treeBuilder.build(dictionary);
+//        PrefixTree<TreeBuilder.TreeData> tree = treeBuilder.buildPrefixTree(dictionary);
 //
 //        System.out.println("Nodes: " + Metrics.countNodes(tree));
 //        System.out.println("Leafs: " + Metrics.countLeafs(tree));
@@ -28,7 +28,7 @@ public class Main {
 //
 //        JsonFilesBuilder jsonFilesBuilder = new JsonFilesBuilder();
 //        Gson gson = new Gson();
-//        jsonFilesBuilder.build(new File("/Users/koluch/tmp/json/"), dictionary, tree, (data) -> {
+//        jsonFilesBuilder.buildPrefixTree(new File("/Users/koluch/tmp/json/"), dictionary, tree, (data) -> {
 //            JsonArray json = new JsonArray();
 //            for (TreeBuilder.TreeData treeData : data) {
 //                JsonArray sub = new JsonArray();
@@ -45,10 +45,5 @@ public class Main {
 
 
     }
-
-//    private static void testOnData(Lookup lookup, MorphParams params) throws IOException {
-//
-//    }
-
 
 }

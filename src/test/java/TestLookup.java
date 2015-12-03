@@ -30,10 +30,9 @@ import org.junit.Before;
 import org.junit.Test;
 import ru.koluch.textWork.morphDict.dictionary.Attribute;
 import ru.koluch.textWork.morphDict.dictionary.Dictionary;
-import ru.koluch.textWork.morphDict.dictionary.parsing.DictionaryParser;
 import ru.koluch.textWork.morphDict.prefixTree.PrefixTree;
-import ru.koluch.textWork.morphDict.dictionary.TreeBuilder;
-import ru.koluch.textWork.morphDict.lookup.PrefixTreeLookup;
+import ru.koluch.textWork.morphDict.dictionary.DictionaryHelper;
+import ru.koluch.textWork.morphDict.lookup.PrefixTreeLookupService;
 import ru.koluch.textWork.morphDict.lookup.LookupResult;
 
 import java.io.*;
@@ -49,15 +48,14 @@ import static ru.koluch.textWork.morphDict.dictionary.Attribute.*;
 
 public class TestLookup {
 
-    private PrefixTreeLookup lookup;
+    private PrefixTreeLookupService lookup;
 
     @Before
-    public void init() throws IOException, DictionaryParser.ParseException {
-        DictionaryParser dictionaryParser = new DictionaryParser();
-        Dictionary dictionary = dictionaryParser.parse(new InputStreamReader(TestLookup.class.getResourceAsStream("/morphs.mrd"), "UTF-8"));
-        TreeBuilder treeBuilder = new TreeBuilder();
-        PrefixTree<TreeBuilder.TreeData> tree = treeBuilder.build(dictionary);
-        lookup = new PrefixTreeLookup(dictionary, tree);
+    public void init() throws IOException, DictionaryHelper.ParseException {
+        Dictionary dictionary = DictionaryHelper.parse(new InputStreamReader(Dictionary.class.getResourceAsStream("/morphs.mrd"), "UTF-8"));
+        DictionaryHelper dictionaryHelper = new DictionaryHelper();
+        PrefixTree<DictionaryHelper.TreeData> tree = DictionaryHelper.buildPrefixTree(dictionary);
+        lookup = new PrefixTreeLookupService(dictionary, tree);
     }
 
 

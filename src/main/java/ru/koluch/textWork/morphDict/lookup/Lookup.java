@@ -31,7 +31,5 @@ package ru.koluch.textWork.morphDict.lookup;
 import java.util.ArrayList;
 
 public interface Lookup {
-
-
-    ArrayList<LookupResult> find(String tofind);
+    ArrayList<LookupResult> find(String toFind);
 }

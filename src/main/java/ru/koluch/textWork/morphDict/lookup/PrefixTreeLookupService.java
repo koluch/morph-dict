@@ -24,17 +24,17 @@ package ru.koluch.textWork.morphDict.lookup;
 import ru.koluch.textWork.morphDict.dictionary.*;
 import ru.koluch.textWork.morphDict.dictionary.Dictionary;
 import ru.koluch.textWork.morphDict.prefixTree.PrefixTree;
-import ru.koluch.textWork.morphDict.dictionary.TreeBuilder;
+import ru.koluch.textWork.morphDict.dictionary.DictionaryHelper;
 
 import java.util.*;
 
-public class PrefixTreeLookup implements Lookup{
+public class PrefixTreeLookupService implements Lookup{
 
 
     private final Dictionary dictionary;
-    private final PrefixTree<TreeBuilder.TreeData> prefixTree;
+    private final PrefixTree<DictionaryHelper.TreeData> prefixTree;
 
-    public PrefixTreeLookup(Dictionary dictionary, PrefixTree<TreeBuilder.TreeData> prefixTree) {
+    public PrefixTreeLookupService(Dictionary dictionary, PrefixTree<DictionaryHelper.TreeData> prefixTree) {
         this.dictionary = dictionary;
         this.prefixTree = prefixTree;
     }
@@ -42,16 +42,16 @@ public class PrefixTreeLookup implements Lookup{
     /**
      * Search wordform in dictionary
      *
-     * @param tofind arbitrary wordform
+     * @param toFind arbitrary wordform
      * @return list of lexemes-homonym, containing specified wordform
      */
     @Override
-    public ArrayList<LookupResult> find(String tofind)
+    public ArrayList<LookupResult> find(String toFind)
     {
         ArrayList<LookupResult> lookupResultList = new ArrayList<>();
 
-        List<TreeBuilder.TreeData> treeDataList = prefixTree.get(tofind).get();//todo: check for null
-        for (TreeBuilder.TreeData treeData : treeDataList) {
+        List<DictionaryHelper.TreeData> treeDataList = prefixTree.get(toFind).get();//todo: check for null
+        for (DictionaryHelper.TreeData treeData : treeDataList) {
             LexemeRec lexemeRec = dictionary.lexemeRecs.get(treeData.lexemeRecNum);
             Optional<String> commonAncode = lexemeRec.ancode;
             List<ParadigmRule> paradigmRules = dictionary.paradigms.get(lexemeRec.paradigmNum);
