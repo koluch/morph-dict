@@ -53,7 +53,7 @@ public class PrefixTreeLookupService implements LookupService {
                 List<ParadigmRule> paradigmRules = dictionary.paradigmList.get(lexemeRec.paradigmIndex);
                 Optional<String> globalPrefix = lexemeRec.prefixParadigmIndex.map(dictionary.prefixeParadigmList::get);
 
-                // Build found wordform
+                // Build found word form
                 ParadigmRule foundParadigmRule = paradigmRules.get(treeData.paradigmNum);
                 WordForm foundWordForm = new WordForm(
                         Optional.of(globalPrefix.orElse("") + foundParadigmRule.prefix.orElse("")),
@@ -63,16 +63,16 @@ public class PrefixTreeLookupService implements LookupService {
                 );
 
                 // Build lexeme
-                ArrayList<WordForm> omonims = new ArrayList<>();
+                ArrayList<WordForm> homonyms = new ArrayList<>();
                 for (ParadigmRule paradigmRule : paradigmRules) {
-                    omonims.add(new WordForm(
+                    homonyms.add(new WordForm(
                             Optional.of(globalPrefix.orElse("") + paradigmRule.prefix.orElse("")),
                             lexemeRec.basis,
                             paradigmRule.ending,
                             paradigmRule.ancode
                     ));
                 }
-                Lexeme lexeme = new Lexeme(omonims, commonAncode);
+                Lexeme lexeme = new Lexeme(homonyms, commonAncode);
 
                 lookupResultList.add(new LookupResult(foundWordForm, lexeme));
             }
