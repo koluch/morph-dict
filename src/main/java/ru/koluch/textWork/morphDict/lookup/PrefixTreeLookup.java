@@ -18,13 +18,13 @@
  * Author:  Nikolay Mavrenkov <koluch@koluch.ru>
  * Created: 28.10.2015 00:42
  */
-package ru.koluch.textWork.lookup;
+package ru.koluch.textWork.morphDict.lookup;
 
 
-import ru.koluch.textWork.dictionary.*;
-import ru.koluch.textWork.dictionary.Dictionary;
-import ru.koluch.textWork.dictionary.prefixTree.PrefixTree;
-import ru.koluch.textWork.dictionary.prefixTree.TreeBuilder;
+import ru.koluch.textWork.morphDict.dictionary.*;
+import ru.koluch.textWork.morphDict.dictionary.Dictionary;
+import ru.koluch.textWork.morphDict.dictionary.prefixTree.PrefixTree;
+import ru.koluch.textWork.morphDict.dictionary.prefixTree.TreeBuilder;
 
 import java.util.*;
 

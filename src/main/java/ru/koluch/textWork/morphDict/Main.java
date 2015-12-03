@@ -1,14 +1,8 @@
-package ru.koluch.textWork;
+package ru.koluch.textWork.morphDict;
 
 import java.io.*;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import ru.koluch.textWork.dictionary.*;
-import ru.koluch.textWork.dictionary.parsing.DictionaryParser;
-import ru.koluch.textWork.dictionary.prefixTree.Metrics;
-import ru.koluch.textWork.dictionary.prefixTree.PrefixTree;
-import ru.koluch.textWork.dictionary.prefixTree.TreeBuilder;
+import ru.koluch.textWork.morphDict.dictionary.parsing.DictionaryParser;
 
 public class Main {
 

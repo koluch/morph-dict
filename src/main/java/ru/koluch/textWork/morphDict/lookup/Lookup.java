@@ -23,21 +23,15 @@
  * SOFTWARE.
  * --------------------------------------------------------------------
  * Author:  Nikolai Mavrenkov <koluch@koluch.ru>
- * Created: 02.12.2015 17:53
+ * Created: 02.12.2015 15:24
  */
-package ru.koluch.textWork;
-
-import ru.koluch.textWork.dictionary.Attribute;
-
-import java.util.Arrays;
-import java.util.List;
-
-import static ru.koluch.textWork.dictionary.Attribute.*;
-
-public class AncodeToAttrs {
+package ru.koluch.textWork.morphDict.lookup;
 
 
+import java.util.ArrayList;
 
-    
-    
+public interface Lookup {
+
+
+    ArrayList<LookupResult> find(String tofind);
 }

@@ -18,7 +18,7 @@
  * Author:  Nikolay Mavrenkov <koluch@koluch.ru>
  * Created: 30.10.2015 01:11
  */
-package ru.koluch.textWork.dictionary.prefixTree;
+package ru.koluch.textWork.morphDict.dictionary.prefixTree;
 
 
 import java.util.ArrayList;

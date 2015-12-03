@@ -1,14 +1,17 @@
-package ru.koluch.textWork.dictionary.parsing;
+package ru.koluch.textWork.morphDict.dictionary.parsing;
 
-
-import ru.koluch.textWork.dictionary.LexemeRec;
-import ru.koluch.textWork.dictionary.ParadigmRule;
-
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.Reader;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import ru.koluch.textWork.morphDict.dictionary.Dictionary;
+import ru.koluch.textWork.morphDict.dictionary.LexemeRec;
+import ru.koluch.textWork.morphDict.dictionary.ParadigmRule;
 
 /**
  *
@@ -20,7 +23,7 @@ public class DictionaryParser {
     public DictionaryParser() {
     }
 
-    public ru.koluch.textWork.dictionary.Dictionary parse(Reader reader) throws ParseException {
+    public Dictionary parse(Reader reader) throws ParseException {
 
 
 
@@ -105,7 +108,7 @@ public class DictionaryParser {
 
             }
 
-            return new ru.koluch.textWork.dictionary.Dictionary(allRules, lexemeRecs, prefixes);
+            return new Dictionary(allRules, lexemeRecs, prefixes);
 
         } catch (IOException ex) {
             throw new ParseException(ex);

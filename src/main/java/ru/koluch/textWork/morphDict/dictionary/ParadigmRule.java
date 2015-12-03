@@ -1,4 +1,4 @@
-package ru.koluch.textWork.dictionary;
+package ru.koluch.textWork.morphDict.dictionary;
 
 import java.util.Optional;
 

@@ -1,26 +1,3 @@
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import ru.koluch.textWork.dictionary.Attribute;
-import ru.koluch.textWork.dictionary.Dictionary;
-import ru.koluch.textWork.dictionary.MorphParams;
-import ru.koluch.textWork.dictionary.parsing.DictionaryParser;
-import ru.koluch.textWork.dictionary.prefixTree.Metrics;
-import ru.koluch.textWork.dictionary.prefixTree.PrefixTree;
-import ru.koluch.textWork.dictionary.prefixTree.TreeBuilder;
-import ru.koluch.textWork.lookup.PrefixTreeLookup;
-import ru.koluch.textWork.lookup.LookupResult;
-import ru.koluch.textWork.lookup.WordForm;
-
-import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-
 /**
  * --------------------------------------------------------------------
  * The MIT License (MIT)
@@ -49,6 +26,26 @@ import static org.junit.Assert.assertTrue;
  * Created: 02.12.2015 14:34
  */
 
+import org.junit.Before;
+import org.junit.Test;
+import ru.koluch.textWork.morphDict.dictionary.Attribute;
+import ru.koluch.textWork.morphDict.dictionary.Dictionary;
+import ru.koluch.textWork.morphDict.dictionary.parsing.DictionaryParser;
+import ru.koluch.textWork.morphDict.dictionary.prefixTree.PrefixTree;
+import ru.koluch.textWork.morphDict.dictionary.prefixTree.TreeBuilder;
+import ru.koluch.textWork.morphDict.lookup.PrefixTreeLookup;
+import ru.koluch.textWork.morphDict.lookup.LookupResult;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Set;
+
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.assertThat;
+import static ru.koluch.textWork.morphDict.dictionary.Attribute.*;
+
+
+
 
 public class TestLookup {
 
@@ -57,51 +54,41 @@ public class TestLookup {
     @Before
     public void init() throws IOException, DictionaryParser.ParseException {
         DictionaryParser dictionaryParser = new DictionaryParser();
-        MorphParams params = new MorphParams(new InputStreamReader(TestLookup.class.getResourceAsStream("/rgramtab.tab"), "UTF-8"));
-
         Dictionary dictionary = dictionaryParser.parse(new InputStreamReader(TestLookup.class.getResourceAsStream("/morphs.mrd"), "UTF-8"));
-
-
         TreeBuilder treeBuilder = new TreeBuilder();
         PrefixTree<TreeBuilder.TreeData> tree = treeBuilder.build(dictionary);
-
         lookup = new PrefixTreeLookup(dictionary, tree);
-
-
-//
-//        JsonFilesBuilder jsonFilesBuilder = new JsonFilesBuilder();
-//        Gson gson = new Gson();
-//        jsonFilesBuilder.build(new File("/Users/koluch/tmp/json/"), dictionary, tree, (data) -> {
-//            JsonArray json = new JsonArray();
-//            for (TreeBuilder.TreeData treeData : data) {
-//                JsonArray sub = new JsonArray();
-//                sub.add(treeData.ancode);
-//                sub.add(treeData.lexemeRecNum);
-//                json.add(sub);
-//            }
-//            return json;
-//        });
-
-//        testOnData(lookup, params);
-
     }
 
 
     @Test
-    public void test1() throws IOException {
-
+    public void testNoun() throws IOException {
         ArrayList<LookupResult> resultList = lookup.find("собакой");
 
         assertThat(resultList.size(), is(1));
 
         LookupResult lookupResult = resultList.get(0);
-
         Set<Attribute> attributes = Attribute.getAttributes(lookupResult.wordForm.getAncode());
 
-        assertTrue(attributes.contains(Attribute.NOUN));
-        assertTrue(attributes.contains(Attribute.FEMININE_GENDER));
-        assertTrue(attributes.contains(Attribute.INSTRUMENTAL_CASE));
-        assertTrue(attributes.contains(Attribute.SINGULAR));
+        assertThat(attributes, hasItem(NOUN));
+        assertThat(attributes, hasItem(FEMININE_GENDER));
+        assertThat(attributes, hasItem(INSTRUMENTAL_CASE));
+        assertThat(attributes, hasItem(SINGULAR));
+    }
 
+    @Test
+    public void testVerb() throws IOException {
+        ArrayList<LookupResult> resultList = lookup.find("побегут");
+
+        assertThat(resultList.size(), is(1));
+
+        LookupResult lookupResult = resultList.get(0);
+        Set<Attribute> attributes = Attribute.getAttributes(lookupResult.wordForm.getAncode());
+
+        assertThat(attributes, hasItem(VERB));
+        assertThat(attributes, hasItem(FUTURE_TENSE));
+        assertThat(attributes, hasItem(PLURAL));
+        assertThat(attributes, hasItem(ACTIVE_VOICE));
+        assertThat(attributes, hasItem(PLURAL));
     }
 }

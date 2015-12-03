@@ -25,7 +25,7 @@
  * Author:  Nikolai Mavrenkov <koluch@koluch.ru>
  * Created: 02.12.2015 15:54
  */
-package ru.koluch.textWork.lookup;
+package ru.koluch.textWork.morphDict.lookup;
 
 
 public class LookupResult {

@@ -18,14 +18,14 @@
  * Author:  Nikolay Mavrenkov <koluch@koluch.ru>
  * Created: 30.10.2015 01:20
  */
-package ru.koluch.textWork.dictionary.prefixTree;
-
-import ru.koluch.textWork.dictionary.Dictionary;
-import ru.koluch.textWork.dictionary.LexemeRec;
-import ru.koluch.textWork.dictionary.ParadigmRule;
+package ru.koluch.textWork.morphDict.dictionary.prefixTree;
 
 import java.util.Iterator;
 import java.util.List;
+
+import ru.koluch.textWork.morphDict.dictionary.Dictionary;
+import ru.koluch.textWork.morphDict.dictionary.LexemeRec;
+import ru.koluch.textWork.morphDict.dictionary.ParadigmRule;
 
 public class TreeBuilder {
 

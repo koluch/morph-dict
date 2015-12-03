@@ -18,15 +18,15 @@
  * Author:  Nikolay Mavrenkov <koluch@koluch.ru>
  * Created: 31.10.2015 21:54
  */
-package ru.koluch.textWork;
+package ru.koluch.textWork.morphDict;
 
 
 import com.google.gson.*;
 import com.google.gson.stream.JsonWriter;
-import ru.koluch.textWork.dictionary.Dictionary;
-import ru.koluch.textWork.dictionary.LexemeRec;
-import ru.koluch.textWork.dictionary.ParadigmRule;
-import ru.koluch.textWork.dictionary.prefixTree.PrefixTree;
+import ru.koluch.textWork.morphDict.dictionary.Dictionary;
+import ru.koluch.textWork.morphDict.dictionary.LexemeRec;
+import ru.koluch.textWork.morphDict.dictionary.ParadigmRule;
+import ru.koluch.textWork.morphDict.dictionary.prefixTree.PrefixTree;
 
 import java.io.*;
 import java.util.List;

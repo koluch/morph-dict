@@ -25,7 +25,7 @@
  * Author:  Nikolai Mavrenkov <koluch@koluch.ru>
  * Created: 02.12.2015 16:56
  */
-package ru.koluch.textWork.dictionary;
+package ru.koluch.textWork.morphDict.dictionary;
 
 import java.util.Arrays;
 import java.util.HashSet;

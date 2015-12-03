@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package ru.koluch.textWork.lookup;
+package ru.koluch.textWork.morphDict.lookup;
 
 import java.util.ArrayList;
 import java.util.Optional;

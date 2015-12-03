@@ -18,12 +18,12 @@
  * Author:  Nikolay Mavrenkov <koluch@koluch.ru>
  * Created: 31.10.2015 18:26
  */
-package ru.koluch.textWork.dictionary.prefixTree;
+package ru.koluch.textWork.morphDict.dictionary.prefixTree;
 
 /**
  * Auxiliary class to count things inside tree
  */
-public class Metrics {
+public class Statistics {
 
     public static  <T> Integer count(PrefixTree<T> tree) {
         int result = 1;
