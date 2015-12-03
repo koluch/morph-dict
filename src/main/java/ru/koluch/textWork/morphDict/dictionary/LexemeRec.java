@@ -1,8 +1,10 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Copyright (c) 2015 Nikolai Mavrenkov <koluch@koluch.ru>
+ * <p>
+ * Distributed under the MIT License (See accompanying file LICENSE or copy at http://opensource.org/licenses/MIT).
+ * <p>
+ * Created: 30.10.2015 01:20
  */
-
 package ru.koluch.textWork.morphDict.dictionary;
 
 import java.util.Optional;
