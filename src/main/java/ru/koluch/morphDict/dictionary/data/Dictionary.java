@@ -5,7 +5,7 @@
  * <p>
  * Created: 27.10.2015 23:07
  */
-package ru.koluch.textWork.morphDict.dictionary.data;
+package ru.koluch.morphDict.dictionary.data;
 
 import java.util.*;
 

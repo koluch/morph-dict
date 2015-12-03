@@ -5,7 +5,7 @@
  * <p>
  * Created: 30.10.2015 01:20
  */
-package ru.koluch.textWork.morphDict.dictionary;
+package ru.koluch.morphDict.dictionary;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,11 +14,11 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import ru.koluch.textWork.morphDict.dictionary.data.Dictionary;
-import ru.koluch.textWork.morphDict.dictionary.data.LexemeRec;
-import ru.koluch.textWork.morphDict.dictionary.data.ParadigmRule;
-import ru.koluch.textWork.morphDict.prefixTree.PrefixTree;
-import static ru.koluch.textWork.morphDict.dictionary.Attribute.*;
+import ru.koluch.morphDict.dictionary.data.Dictionary;
+import ru.koluch.morphDict.dictionary.data.LexemeRec;
+import ru.koluch.morphDict.dictionary.data.ParadigmRule;
+import ru.koluch.morphDict.prefixTree.PrefixTree;
+import static ru.koluch.morphDict.dictionary.Attribute.*;
 
 public class DictionaryHelper {
 

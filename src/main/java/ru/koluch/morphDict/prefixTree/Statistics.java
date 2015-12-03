@@ -5,7 +5,7 @@
  * <p>
  * Created: 31.10.2015 18:26
  */
-package ru.koluch.textWork.morphDict.prefixTree;
+package ru.koluch.morphDict.prefixTree;
 
 /**
  * Auxiliary class to countNodes things inside tree

@@ -5,17 +5,17 @@
  * <p>
  * Created: 28.10.2015 00:42
  */
-package ru.koluch.textWork.morphDict.lookup;
+package ru.koluch.morphDict.lookup;
 
 
-import ru.koluch.textWork.morphDict.dictionary.data.Dictionary;
-import ru.koluch.textWork.morphDict.dictionary.data.LexemeRec;
-import ru.koluch.textWork.morphDict.dictionary.data.ParadigmRule;
-import ru.koluch.textWork.morphDict.lookup.data.Lexeme;
-import ru.koluch.textWork.morphDict.lookup.data.LookupResult;
-import ru.koluch.textWork.morphDict.lookup.data.WordForm;
-import ru.koluch.textWork.morphDict.prefixTree.PrefixTree;
-import ru.koluch.textWork.morphDict.dictionary.DictionaryHelper;
+import ru.koluch.morphDict.dictionary.data.Dictionary;
+import ru.koluch.morphDict.dictionary.data.LexemeRec;
+import ru.koluch.morphDict.dictionary.data.ParadigmRule;
+import ru.koluch.morphDict.lookup.data.Lexeme;
+import ru.koluch.morphDict.lookup.data.LookupResult;
+import ru.koluch.morphDict.lookup.data.WordForm;
+import ru.koluch.morphDict.prefixTree.PrefixTree;
+import ru.koluch.morphDict.dictionary.DictionaryHelper;
 
 import java.util.*;
 

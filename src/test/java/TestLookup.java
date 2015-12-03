@@ -28,14 +28,14 @@
 
 import org.junit.Before;
 import org.junit.Test;
-import ru.koluch.textWork.morphDict.dictionary.Attribute;
-import ru.koluch.textWork.morphDict.dictionary.data.Dictionary;
-import ru.koluch.textWork.morphDict.lookup.data.Lexeme;
-import ru.koluch.textWork.morphDict.lookup.data.WordForm;
-import ru.koluch.textWork.morphDict.prefixTree.PrefixTree;
-import ru.koluch.textWork.morphDict.dictionary.DictionaryHelper;
-import ru.koluch.textWork.morphDict.lookup.PrefixTreeLookupService;
-import ru.koluch.textWork.morphDict.lookup.data.LookupResult;
+import ru.koluch.morphDict.dictionary.Attribute;
+import ru.koluch.morphDict.dictionary.data.Dictionary;
+import ru.koluch.morphDict.lookup.data.Lexeme;
+import ru.koluch.morphDict.lookup.data.WordForm;
+import ru.koluch.morphDict.prefixTree.PrefixTree;
+import ru.koluch.morphDict.dictionary.DictionaryHelper;
+import ru.koluch.morphDict.lookup.PrefixTreeLookupService;
+import ru.koluch.morphDict.lookup.data.LookupResult;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -45,7 +45,7 @@ import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-import static ru.koluch.textWork.morphDict.dictionary.Attribute.*;
+import static ru.koluch.morphDict.dictionary.Attribute.*;
 
 
 

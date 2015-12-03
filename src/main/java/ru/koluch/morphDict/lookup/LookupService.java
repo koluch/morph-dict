@@ -5,10 +5,10 @@
  * <p>
  * Created: 02.12.2015 15:24
  */
-package ru.koluch.textWork.morphDict.lookup;
+package ru.koluch.morphDict.lookup;
 
 
-import ru.koluch.textWork.morphDict.lookup.data.LookupResult;
+import ru.koluch.morphDict.lookup.data.LookupResult;
 
 import java.util.ArrayList;
 

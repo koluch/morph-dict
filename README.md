@@ -4,17 +4,17 @@ Morphological dictionary for Java, based on [AOT project](http://aot.ru) technol
 
 ## Example
 ```java
-import ru.koluch.textWork.morphDict.dictionary.Attribute;
-import ru.koluch.textWork.morphDict.dictionary.DictionaryHelper;
-import ru.koluch.textWork.morphDict.dictionary.data.Dictionary;
-import ru.koluch.textWork.morphDict.lookup.PrefixTreeLookupService;
-import ru.koluch.textWork.morphDict.lookup.data.LookupResult;
-import ru.koluch.textWork.morphDict.lookup.data.WordForm;
-import ru.koluch.textWork.morphDict.prefixTree.PrefixTree;
+import ru.koluch.morphDict.dictionary.Attribute;
+import ru.koluch.morphDict.dictionary.DictionaryHelper;
+import ru.koluch.morphDict.dictionary.data.Dictionary;
+import ru.koluch.morphDict.lookup.PrefixTreeLookupService;
+import ru.koluch.morphDict.lookup.data.LookupResult;
+import ru.koluch.morphDict.lookup.data.WordForm;
+import ru.koluch.morphDict.prefixTree.PrefixTree;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-import static ru.koluch.textWork.morphDict.dictionary.DictionaryHelper.buildPrefixTree;
+import static ru.koluch.morphDict.dictionary.DictionaryHelper.buildPrefixTree;
 
 public class Example {
 

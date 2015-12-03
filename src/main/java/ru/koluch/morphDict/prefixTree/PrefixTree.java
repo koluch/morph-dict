@@ -5,7 +5,7 @@
  * <p>
  * Created: 30.10.2015 01:11
  */
-package ru.koluch.textWork.morphDict.prefixTree;
+package ru.koluch.morphDict.prefixTree;
 
 
 import java.util.ArrayList;

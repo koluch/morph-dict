@@ -5,9 +5,7 @@
  * <p>
  * Created: 02.12.2015 16:56
  */
-package ru.koluch.textWork.morphDict.dictionary;
-
-import java.util.*;
+package ru.koluch.morphDict.dictionary;
 
 /**
  * Class to work with wordform attributes, like "part of speach" or "animacy"
