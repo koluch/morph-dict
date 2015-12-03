@@ -25,17 +25,17 @@ public class DictionaryHelper {
         Parsing
      */
 
+    /**
+     * Parse morphs.mrd file through supplied reader and build dictionary
+     *
+     * @param reader reader with morphs.mrd file content
+     * @return
+     * @throws ParseException
+     */
     public static Dictionary parse(Reader reader) throws ParseException {
 
-
-
-        /**
-         * Dictionary loading
-         */
         try(BufferedReader fin = new BufferedReader(reader)) {
 
-
-            // Load flexias models
             List<List<ParadigmRule>> allRules = new ArrayList<>();
             int num = Integer.valueOf(fin.readLine());
             Pattern paradigmListEx = Pattern.compile("\\%([^\\%]+)");
@@ -150,8 +150,8 @@ public class DictionaryHelper {
         int lexemeRecNum = 0;
         while (lexemeRecIterator.hasNext()) {
             LexemeRec lexemeRec = lexemeRecIterator.next();
-            List<ParadigmRule> paradigmRules = dictionary.paradigms.get(lexemeRec.paradigmNum);
-            String superPrefix = lexemeRec.prefixParadigmNum.map(dictionary.prefixeParadigms::get).orElse("");
+            List<ParadigmRule> paradigmRules = dictionary.paradigmList.get(lexemeRec.paradigmIndex);
+            String superPrefix = lexemeRec.prefixParadigmIndex.map(dictionary.prefixeParadigmList::get).orElse("");
 
             Iterator<ParadigmRule> paragirmRuleIterator = paradigmRules.iterator();
             int paradigmNum = 0;

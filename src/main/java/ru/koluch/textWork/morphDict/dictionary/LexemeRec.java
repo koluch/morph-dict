@@ -10,25 +10,25 @@ package ru.koluch.textWork.morphDict.dictionary;
 import java.util.Optional;
 
 /**
- * Record in lexemes table
- *
- * "Nikolay Mavrenkov <koluch@koluch.ru>"
+ * Record in lexemes table (in morphs.mrd file)
+ * <p>
+ * Immutable data-class
  */
 public class LexemeRec {
     public final String basis;
-    public final Integer paradigmNum;
-    public final Integer accentParadigmNum;
-    public final Integer userSessionNum;
+    public final Integer paradigmIndex;
+    public final Integer accentParadigmIndex;
+    public final Integer userSessionIndex;
     public final Optional<String> ancode;
-    public final Optional<Integer> prefixParadigmNum;
+    public final Optional<Integer> prefixParadigmIndex;
 
 
-    public LexemeRec(String basis, Integer paradigmNum, Optional<String> ancode, Integer accentParadigmNum, Integer userSessionNum, Optional<Integer> prefixParadigmNum) {
+    public LexemeRec(String basis, Integer paradigmIndex, Optional<String> ancode, Integer accentParadigmIndex, Integer userSessionIndex, Optional<Integer> prefixParadigmIndex) {
         this.basis = basis;
-        this.paradigmNum = paradigmNum;
-        this.accentParadigmNum = accentParadigmNum;
-        this.userSessionNum = userSessionNum;
+        this.paradigmIndex = paradigmIndex;
+        this.accentParadigmIndex = accentParadigmIndex;
+        this.userSessionIndex = userSessionIndex;
         this.ancode = ancode;
-        this.prefixParadigmNum = prefixParadigmNum;
+        this.prefixParadigmIndex = prefixParadigmIndex;
     }
 }

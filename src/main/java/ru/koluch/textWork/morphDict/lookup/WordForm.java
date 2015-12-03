@@ -10,19 +10,14 @@ package ru.koluch.textWork.morphDict.lookup;
 import java.util.Optional;
 
 /**
- * Wordform. Stores ending and ancode
- *
- * "Nikolay Mavrenkov <koluch@koluch.ru>"
+ * Beside of word form itself, this class makes possible to get word form attributes using ancode
  */
 public class WordForm {
     
-    private Optional<String> prefix;
-    
-    private String base;
-    
-    private Optional<String> ending;
-    
-    private String ancode;
+    public final Optional<String> prefix;
+    public final String base;
+    public final Optional<String> ending;
+    public final String ancode;
     
 
     public WordForm(Optional<String> prefix, String base, Optional<String> ending, String ancode) {
@@ -30,40 +25,6 @@ public class WordForm {
         this.base = base;
         this.ending = ending;
         this.ancode = ancode;
-    }
-
-    public Optional<String> getPrefix() {
-        return prefix;
-    }
-
-    public void setPrefix(Optional<String> prefix) {
-        this.prefix = prefix;
-    }
-
-    public void setBase(String base) {
-        this.base = base;
-    }
-
-    public String getBase() {
-        return base;
-    }
-
-    
-    public void setEnding(Optional<String> ending) {
-        this.ending = ending;
-    }
-
-    public Optional<String> getEnding() {
-        return ending;
-    }
-   
-    
-    public void setAncode(String ancode) {
-        this.ancode = ancode;
-    }
-
-    public String getAncode() {
-        return ancode;
     }
 
     @Override

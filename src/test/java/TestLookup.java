@@ -30,6 +30,7 @@ import org.junit.Before;
 import org.junit.Test;
 import ru.koluch.textWork.morphDict.dictionary.Attribute;
 import ru.koluch.textWork.morphDict.dictionary.Dictionary;
+import ru.koluch.textWork.morphDict.lookup.Lexeme;
 import ru.koluch.textWork.morphDict.prefixTree.PrefixTree;
 import ru.koluch.textWork.morphDict.dictionary.DictionaryHelper;
 import ru.koluch.textWork.morphDict.lookup.PrefixTreeLookupService;
@@ -66,7 +67,7 @@ public class TestLookup {
         assertThat(resultList.size(), is(1));
 
         LookupResult lookupResult = resultList.get(0);
-        Set<Attribute> attributes = Attribute.getAttributes(lookupResult.wordForm.getAncode());
+        Set<Attribute> attributes = Attribute.getAttributes(lookupResult.wordForm.ancode);
 
         assertThat(attributes, hasItem(NOUN));
         assertThat(attributes, hasItem(FEMININE_GENDER));
@@ -81,12 +82,15 @@ public class TestLookup {
         assertThat(resultList.size(), is(1));
 
         LookupResult lookupResult = resultList.get(0);
-        Set<Attribute> attributes = Attribute.getAttributes(lookupResult.wordForm.getAncode());
+        Set<Attribute> attributes = Attribute.getAttributes(lookupResult.wordForm.ancode);
 
         assertThat(attributes, hasItem(VERB));
         assertThat(attributes, hasItem(FUTURE_TENSE));
         assertThat(attributes, hasItem(PLURAL));
         assertThat(attributes, hasItem(ACTIVE_VOICE));
         assertThat(attributes, hasItem(PLURAL));
+
+        Lexeme lexeme = resultList.get(0).lexeme;
+        assertThat(lexeme.omonims.size(), is(1));
     }
 }

@@ -9,6 +9,11 @@ package ru.koluch.textWork.morphDict.dictionary;
 
 import java.util.Optional;
 
+/**
+ * Record in record in paradigm table (in morphs.mrd file)
+ * <p>
+ * Immutable data-class*
+ */
 public class ParadigmRule {
 
     public final Optional<String> ending;

@@ -15,6 +15,9 @@ import ru.koluch.textWork.morphDict.dictionary.DictionaryHelper;
 
 import java.util.*;
 
+/**
+ * Implementation of lookup service using prefix-tree represenation
+ */
 public class PrefixTreeLookupService implements LookupService {
 
 
@@ -41,8 +44,8 @@ public class PrefixTreeLookupService implements LookupService {
         for (DictionaryHelper.TreeData treeData : treeDataList) {
             LexemeRec lexemeRec = dictionary.lexemeRecs.get(treeData.lexemeRecNum);
             Optional<String> commonAncode = lexemeRec.ancode;
-            List<ParadigmRule> paradigmRules = dictionary.paradigms.get(lexemeRec.paradigmNum);
-            Optional<String> globalPrefix = lexemeRec.prefixParadigmNum.map(dictionary.prefixeParadigms::get);
+            List<ParadigmRule> paradigmRules = dictionary.paradigmList.get(lexemeRec.paradigmIndex);
+            Optional<String> globalPrefix = lexemeRec.prefixParadigmIndex.map(dictionary.prefixeParadigmList::get);
 
             // Build found wordform
             ParadigmRule foundParadigmRule = paradigmRules.get(treeData.paradigmNum);

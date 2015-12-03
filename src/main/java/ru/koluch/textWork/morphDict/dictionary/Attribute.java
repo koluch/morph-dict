@@ -834,6 +834,14 @@ public enum Attribute {
         ancodeToAttributes.put("яя", new HashSet<>(Arrays.asList(NOUN,MASCULINE_GENDER,FEMININE_GENDER,NEUTER_GENDER,SINGULAR,PLURAL, NOMINATIVE_CASE, GENITIVE_CASE, DATIVE_CASE, ACCUSATIVE_CASE, INSTRUMENTAL_CASE, PREPOSITIONAL_CASE)));
     }
 
+    /**
+     * Return attributes associeted with specified ancode. Ancode is a short for "Anoshkin's code", 2-letters string,
+     * specified for any wordform and for lexeme. You can find more information on aot.ru site, see links section
+     * in README file
+     *
+     * @param ancode Anoshkin's code
+     * @return set of attributes
+     */
     public static Set<Attribute> getAttributes(String ancode) {
         if(ancodeToAttributes.containsKey(ancode)) {
             return ancodeToAttributes.get(ancode);

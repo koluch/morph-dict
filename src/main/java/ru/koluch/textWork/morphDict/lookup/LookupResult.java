@@ -27,11 +27,22 @@
  */
 package ru.koluch.textWork.morphDict.lookup;
 
-
+/**
+ * Single record of lookup results
+ * <p>
+ * Immutable data-class
+ */
 public class LookupResult {
 
+    /**
+     * Found word form
+     */
     public final WordForm wordForm;
-    private final Lexeme lexeme;
+
+    /**
+     * Lexeme containing found word form
+     */
+    public final Lexeme lexeme;
 
     public LookupResult(WordForm wordForm, Lexeme lexeme) {
         this.wordForm = wordForm;
