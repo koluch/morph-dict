@@ -34,8 +34,8 @@ public class DictionaryHelper {
      * Parse morphs.mrd file through supplied reader and build dictionary
      *
      * @param reader reader with morphs.mrd file content
-     * @return
-     * @throws ParseException
+     * @return parsed dictionary
+     * @throws ParseException thrown when parsing failed
      */
     public static Dictionary parse(Reader reader) throws ParseException {
 
