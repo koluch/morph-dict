@@ -20,8 +20,11 @@ public class Example {
 
     public static void main(String[] args) throws Throwable {
         // Load dictionary from resource file
-        Dictionary dictionary = DictionaryHelper.parse(new InputStreamReader(Dictionary.class.getResourceAsStream("/morphs.mrd"), "UTF-8"));
-
+        Dictionary dictionary;
+        try(InputStreamReader reader = new InputStreamReader(Dictionary.class.getResourceAsStream("/morphs.mrd"), "UTF-8")) {
+            dictionary = DictionaryHelper.parse(reader);
+        }
+       
         // Build prefix tree for dictionary
         PrefixTree<DictionaryHelper.TreeData> tree = buildPrefixTree(dictionary);
 
@@ -50,6 +53,31 @@ public class Example {
     }
 
 }
+```
+
+Output:
+
+```
+Attributes:
+NOUN
+INSTRUMENTAL_CASE
+FEMININE_GENDER
+PLURAL
+
+Homonyms:
+машина
+машины
+машине
+машину
+машиной
+машиною
+машине
+машины
+машин
+машинам
+машины
+машинами
+машинах
 ```
 
 ## Links
