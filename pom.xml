@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>ru.koluch.morphdict</groupId>
-    <artifactId>core</artifactId>
+    <artifactId>morph-dict-core</artifactId>
     <version>1.0</version>
 
     <properties>
