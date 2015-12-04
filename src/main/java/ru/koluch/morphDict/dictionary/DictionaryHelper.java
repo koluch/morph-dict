@@ -9,6 +9,7 @@ package ru.koluch.morphDict.dictionary;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -122,6 +123,20 @@ public class DictionaryHelper {
         }
     }
 
+    /**
+     * Parse dictionary from default resource file
+     * @return parsed dictionary
+     * @throws ParseException thrown when parsing failed
+     */
+    public static Dictionary parse() throws ParseException {
+        try {
+            try (InputStreamReader reader = new InputStreamReader(Dictionary.class.getResourceAsStream("/morphs.mrd"), "UTF-8")) {
+                return parse(reader);
+            }
+        } catch (IOException e) {
+            throw new ParseException("Unexpected exception while parsing morphs.mrd file", e);
+        }
+    }
 
 
     public static class ParseException extends Exception {

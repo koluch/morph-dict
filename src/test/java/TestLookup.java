@@ -56,7 +56,7 @@ public class TestLookup {
 
     @Before
     public void init() throws IOException, DictionaryHelper.ParseException {
-        Dictionary dictionary = DictionaryHelper.parse(new InputStreamReader(Dictionary.class.getResourceAsStream("/morphs.mrd"), "UTF-8"));
+        Dictionary dictionary = DictionaryHelper.parse();
         PrefixTree<DictionaryHelper.TreeData> tree = DictionaryHelper.buildPrefixTree(dictionary);
         lookup = new PrefixTreeLookupService(dictionary, tree);
     }
