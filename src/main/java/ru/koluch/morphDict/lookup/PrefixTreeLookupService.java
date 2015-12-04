@@ -48,13 +48,13 @@ public class PrefixTreeLookupService implements LookupService {
         if(treeDataListOpt.isPresent()) {
             List<DictionaryHelper.TreeData> treeDataList = treeDataListOpt.get();
             for (DictionaryHelper.TreeData treeData : treeDataList) {
-                LexemeRec lexemeRec = dictionary.lexemeRecs.get(treeData.lexemeRecNum);
+                LexemeRec lexemeRec = dictionary.lexemeRecs.get(treeData.lexemeRecIndex);
                 Optional<String> commonAncode = lexemeRec.ancode;
                 List<ParadigmRule> paradigmRules = dictionary.paradigmList.get(lexemeRec.paradigmIndex);
                 Optional<String> globalPrefix = lexemeRec.prefixParadigmIndex.map(dictionary.prefixeParadigmList::get);
 
                 // Build found word form
-                ParadigmRule foundParadigmRule = paradigmRules.get(treeData.paradigmNum);
+                ParadigmRule foundParadigmRule = paradigmRules.get(treeData.paradigmRuleIndex);
                 WordForm foundWordForm = new WordForm(
                         Optional.of(globalPrefix.orElse("") + foundParadigmRule.prefix.orElse("")),
                         lexemeRec.basis,

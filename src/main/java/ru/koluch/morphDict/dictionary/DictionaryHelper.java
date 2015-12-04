@@ -193,12 +193,12 @@ public class DictionaryHelper {
 
 
     public static class TreeData {
-        public final Integer lexemeRecNum;
-        public final Integer paradigmNum;
+        public final Integer lexemeRecIndex;
+        public final Integer paradigmRuleIndex;
 
-        public TreeData(Integer paradigmNum, Integer lexemeRecNum) {
-            this.paradigmNum = paradigmNum;
-            this.lexemeRecNum = lexemeRecNum;
+        public TreeData(Integer paradigmRuleIndex, Integer lexemeRecIndex) {
+            this.paradigmRuleIndex = paradigmRuleIndex;
+            this.lexemeRecIndex = lexemeRecIndex;
         }
     }
 
